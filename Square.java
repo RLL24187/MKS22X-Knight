@@ -6,5 +6,16 @@ public class Square{
     y = ycor;
     moves = numMoves;
   }
-  
+  //Getters
+  public int getXcor(){
+    return x;
+  }
+
+  public int getYcor(){
+    return y;
+  }
+
+  public int getMoves(){
+    return moves;
+  }
 }
