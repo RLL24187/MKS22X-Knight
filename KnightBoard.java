@@ -2,12 +2,15 @@ public class KnightBoard{
   //KnightBoard has 3 public methods and a constructor, a private helper is needed as well.
 
   //@throws IllegalArgumentException when either parameter is negative.
-  public KnightBoard(int startingRows,int startingCols){}
+  public KnightBoard(int startingRows,int startingCols){
+
+  }
 
     //Initialize the board to the correct size and make them all 0's
 
 public String toString(){
-
+  String output = "";
+  
 }
   /*
   see format for toString below
@@ -42,7 +45,7 @@ public String toString(){
 
   *I will not be testing boards that have a rows*cols that is >= 100, as the program would take a long time to complete.
   */
-  
+
   /**
   *@throws IllegalStateException when the board contains non-zero values.
   *@throws IllegalArgumentException when either parameter is negative or out of bounds.
@@ -55,10 +58,14 @@ public boolean solve(int startingRow, int startingCol){
   *@throws IllegalStateException when the board contains non-zero values.
   *@throws IllegalArgumentException when either parameter is negative or out of bounds.
   */
-public int countSolutions(int startingRow, int startingCol)
+public int countSolutions(int startingRow, int startingCol){
+
+}
 
 //Suggestion:
-private boolean solveH(int row ,int col, int level)
+private boolean solveH(int row ,int col, int level){
+
+}
 // level is the # of the knight
 
 }
