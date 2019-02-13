@@ -2,7 +2,7 @@ public class KnightBoard{
   //KnightBoard has 3 public methods and a constructor, a private helper is needed as well.
   //Fields
   //private boardSquares = Square[][];
-  private board = int[][];
+  private int[][] board;
 
   //@throws IllegalArgumentException when either parameter is negative.
   public KnightBoard(int startingRows,int startingCols){
@@ -20,7 +20,7 @@ public String toString(){
         output+= board[i][j];
       }
       else{
-        output+= ' '+board[i][j];
+        output+= " "+board[i][j];
       }
       if (j!= board.length - 1){
         output+=" ";
@@ -69,7 +69,7 @@ public String toString(){
   *@throws IllegalArgumentException when either parameter is negative or out of bounds.
  */
 public boolean solve(int startingRow, int startingCol){
-
+  return false;
 }
 
   /**
@@ -77,12 +77,12 @@ public boolean solve(int startingRow, int startingCol){
   *@throws IllegalArgumentException when either parameter is negative or out of bounds.
   */
 public int countSolutions(int startingRow, int startingCol){
-
+  return 0;
 }
 
 //Suggestion:
 private boolean solveH(int row ,int col, int level){
-
+  return false;
 }
 // level is the # of the knight
 
