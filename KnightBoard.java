@@ -1,16 +1,18 @@
 public class KnightBoard{
   //KnightBoard has 3 public methods and a constructor, a private helper is needed as well.
+  //Fields
+  private board = Square[][];
 
   //@throws IllegalArgumentException when either parameter is negative.
   public KnightBoard(int startingRows,int startingCols){
-
+    board = new Square[startingRows][startingCols];
   }
 
     //Initialize the board to the correct size and make them all 0's
 
 public String toString(){
   String output = "";
-  
+
 }
   /*
   see format for toString below
