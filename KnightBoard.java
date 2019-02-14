@@ -1,7 +1,7 @@
 public class KnightBoard{
   //KnightBoard has 3 public methods and a constructor, a private helper is needed as well.
   //Fields
-  private boardSquares = Square[][];
+  private Square[][] boardSquares;
   private int[][] board;
   private int rows;
   private int cols;
@@ -121,7 +121,23 @@ public int countSolutions(int startingRow, int startingCol){
 
 private boolean addKnight(int r, int c, int level){ //add a knight
   //level goes into the int[][] board
-  //reduce the possible moves in boardSquares
+  //reduce the possible moves in boardSquares (later)
+  if (r < 0 || c < 0 || r>=rows || c>= cols){ //avoid out of bounds and negatives
+    return false;
+  }
+  if (board[r][c]==0){ //if no knight added here
+    board[r][c]=level; //set num equal to level
+    return true;
+  }
+  return false;
+}
+
+private boolean removeKnight(int r, int c){ //remove a knight
+  if (board[r][c]!= 0){
+    board[r][c]=0;
+    return true;
+  }
+  return false;
 }
 
 //Suggestion:
@@ -130,8 +146,36 @@ private boolean addKnight(int r, int c, int level){ //add a knight
 //level is the number to place in the box
 private boolean solveH(int row ,int col, int level){
   //Base case:
-  if (level == row * col){
-    return true;
+  if (level == row * col){ //if you've placed down all knights
+    return true; //return true
+  }
+  if (addKnight(row, col, level)){
+    //expanded to debug
+    if (solveH(row + 1, col + 2, level + 1)){
+      return true;
+    }
+    if (solveH(row + 2, col + 1, level + 1)){
+      return true;
+    }
+    if (solveH(row - 1, col + 2, level + 1)){
+      return true;
+    }
+    if (solveH(row - 2, col + 1, level + 1)){
+      return true;
+    }
+    if (solveH(row + 1, col - 2, level + 1)){
+      return true;
+    }
+    if (solveH(row + 2, col - 1, level + 1)){
+      return true;
+    }
+    if (solveH(row - 1, col - 2, level + 1)){
+      return true;
+    }
+    if (solveH(row - 2, col - 1, level + 1)){
+      return true;
+    }
+    removeKnight(row, col); //otherwise remove it again
   }
   return false;
 }
