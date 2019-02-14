@@ -88,7 +88,7 @@ public boolean solve(int startingRow, int startingCol){
   if (!allZero()){
     throw new IllegalStateException("solve(int startingRow, int startingCol) only works on blank boards!");
   }
-  if (startingRow < 0 || startingCol <0 || startingRow >= board.rows || startingCol >= board.cols){
+  if (startingRow < 0 || startingCol <0 || startingRow >= rows || startingCol >= cols){
     throw new IllegalArgumentException("Both parameters must be nonnegative and in the range!");
   }
   return false;
@@ -102,7 +102,7 @@ public int countSolutions(int startingRow, int startingCol){
   if (!allZero()){
     throw new IllegalStateException("solve(int startingRow, int startingCol) only works on blank boards!");
   }
-  if (startingRow < 0 || startingCol <0 || startingRow >= board.rows || startingCol >= board.cols){
+  if (startingRow < 0 || startingCol <0 || startingRow >= rows || startingCol >= cols){
     throw new IllegalArgumentException("Both parameters must be nonnegative and in the range!");
   }
   return 0;
