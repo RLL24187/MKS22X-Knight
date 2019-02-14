@@ -3,11 +3,15 @@ public class KnightBoard{
   //Fields
   //private boardSquares = Square[][];
   private int[][] board;
+  private int rows;
+  private int cols;
 
   //@throws IllegalArgumentException when either parameter is negative.
   public KnightBoard(int startingRows,int startingCols){
     //boardSquares = new Square[startingRows][startingCols];
     board = new int[startingRows][startingCols];
+    rows = startingRows;
+    cols = startingCols;
   }
 
     //Initialize the board to the correct size and make them all 0's
@@ -64,11 +68,29 @@ public String toString(){
   *I will not be testing boards that have a rows*cols that is >= 100, as the program would take a long time to complete.
   */
 
+  //Checks to see if all spaces are 0s
+  private boolean allZero(){
+    for (int i = 0; i < board.length; i++){
+      for (int j = 0; j < board.length; j++){
+        if (board[i][j]!=0){
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
   /**
   *@throws IllegalStateException when the board contains non-zero values.
   *@throws IllegalArgumentException when either parameter is negative or out of bounds.
  */
 public boolean solve(int startingRow, int startingCol){
+  if (!allZero()){
+    throw new IllegalStateException("solve(int startingRow, int startingCol) only works on blank boards!");
+  }
+  if (startingRow < 0 || startingCol <0 || startingRow >= board.rows || startingCol >= board.cols){
+    throw new IllegalArgumentException("Both parameters must be nonnegative and in the range!");
+  }
   return false;
 }
 
@@ -77,6 +99,12 @@ public boolean solve(int startingRow, int startingCol){
   *@throws IllegalArgumentException when either parameter is negative or out of bounds.
   */
 public int countSolutions(int startingRow, int startingCol){
+  if (!allZero()){
+    throw new IllegalStateException("solve(int startingRow, int startingCol) only works on blank boards!");
+  }
+  if (startingRow < 0 || startingCol <0 || startingRow >= board.rows || startingCol >= board.cols){
+    throw new IllegalArgumentException("Both parameters must be nonnegative and in the range!");
+  }
   return 0;
 }
 
