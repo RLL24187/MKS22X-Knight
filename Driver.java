@@ -5,6 +5,15 @@ public class Driver{
     System.out.println("-----------Testing toString-----------\n");
     System.out.println("k5x5: \n");
     System.out.println(k5x5.toString());
-    System.out.println();
+
+
+    System.out.println("-----------Testing solve() exceptions-----------\n");
+    System.out.println("k5x5(5, 0) --> IllegalArgumentException\n");
+    try{
+      k5x5(5,0)
+    }
+    catch (IllegalArgumentException e){
+      System.out.println(e);
+    }
   }
 }
