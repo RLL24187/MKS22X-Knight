@@ -18,4 +18,17 @@ public class Square{
   public int getMoves(){
     return moves;
   }
+
+  //Setters
+  public void setXcor(int xcor){
+    x = xcor;
+  }
+
+  public void setYcor(int ycor){
+    y = ycor;
+  }
+
+  public void setMoves(int newMoves){
+    moves = newMoves;
+  }
 }
