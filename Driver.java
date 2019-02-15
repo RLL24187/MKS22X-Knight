@@ -22,5 +22,9 @@ public class Driver{
     catch (IllegalArgumentException e){ //negative
       System.out.println(e);
     }
+
+    System.out.println("-----------Testing solve()-----------");
+    k5x5.solve(0,0);
+    System.out.println(k5x5.toString());
   }
 }

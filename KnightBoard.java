@@ -146,10 +146,10 @@ private boolean removeKnight(int r, int c){ //remove a knight
 //level is the number to place in the box
 private boolean solveH(int row ,int col, int level){
   //Base case:
-  if (level == row * col){ //if you've placed down all knights
+  if (level == rows * cols && addKnight(row, col, level)){ //if you've placed down all knights
     return true; //return true
   }
-  if (addKnight(row, col, level)){
+  if (addKnight(row, col, level)){ //can you add the knight?
     //expanded to debug
     if (solveH(row + 1, col + 2, level + 1)){
       return true;
