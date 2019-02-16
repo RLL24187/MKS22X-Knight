@@ -78,8 +78,8 @@ public String toString(){
 
   //Checks to see if all spaces are 0s
   private boolean allZero(){
-    for (int i = 0; i < board.length; i++){
-      for (int j = 0; j < board.length; j++){
+    for (int i = 0; i < rows; i++){
+      for (int j = 0; j < cols; j++){
         if (board[i][j]!=0){
           return false;
         }
@@ -181,4 +181,11 @@ private boolean solveH(int row ,int col, int level){
 }
 // level is the # of the knight
 
+public void revert(){ //returns board to 0 everywhere
+  for (int i = 0; i < board.length; i++){
+    for (int j = 0; j < board.length; j++){
+      board[i][j] = 0;
+    }
+  }
+}
 }
