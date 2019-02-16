@@ -23,8 +23,8 @@ public class KnightBoard{
 */
 public String toString(){
   String output = "";
-  for (int i = 0; i < board.length; i++){
-    for (int j = 0; j < board.length; j++){
+  for (int i = 0; i < rows; i++){
+    for (int j = 0; j < cols; j++){
       if (board[i][j]>= 10){
         output+= board[i][j];
       }
@@ -34,7 +34,7 @@ public String toString(){
       else{
         output += " "+board[i][j];
       }
-      if (j!= board.length - 1){
+      if (j!= cols - 1){
         output+=" ";
       }
     }
