@@ -28,28 +28,33 @@ public class Driver{
     }
 
     System.out.println("-----------Testing solve()-----------");
+    System.out.println("Testing k5x5(0,0): \n");
     System.out.println(k5x5.solve(0,0));
     System.out.println(k5x5.toString());
     k5x5.revert();
 
+    System.out.println("Testing k5x5(3,1): \n");
     System.out.println(k5x5.solve(3, 1));
     System.out.println(k5x5.toString());
     k5x5.revert();
 
+    System.out.println("Testing k6x6(4,3): \n");
     System.out.println(k6x6.solve(4, 3));
     System.out.println(k6x6.toString());
     k6x6.revert();
 
+    System.out.println("Testing k2x4(0,2): \n");
     System.out.println(k2x4.solve(0, 2));
     System.out.println(k2x4.toString());
     k2x4.revert();
 
+    System.out.println("Testing k7x7(5,3): \n");
     System.out.println(k7x7.solve(5, 3));
     System.out.println(k7x7.toString());
     k7x7.revert();
 
-
-    System.out.println(k6x8.solve(2, 7));
+    System.out.println("Testing k6x8(2,2): \n");
+    System.out.println(k6x8.solve(2, 2));
     System.out.println(k6x8.toString());
     k5x5.revert();
   }
