@@ -116,7 +116,7 @@ public int countSolutions(int startingRow, int startingCol){
   if (startingRow < 0 || startingCol <0 || startingRow >= rows || startingCol >= cols){
     throw new IllegalArgumentException("Both parameters must be nonnegative and in the range!");
   }
-  return 0;
+  return countH(startingRow, startingCol, 1);
 }
 
 private boolean addKnight(int r, int c, int level){ //add a knight
@@ -180,6 +180,36 @@ private boolean solveH(int row ,int col, int level){
   return false;
 }
 // level is the # of the knight
+
+public int countH(int row, int col, int level){
+  int count = 0;
+  //Base case:
+  if (level == rows * cols && addKnight(row, col, level)){ //if you've placed down all knights
+    return 1; //add 1 to the sum
+  }
+  if (addKnight(row, col, level)){ //can you add the knight?
+    //expanded to debug
+
+    count+=countH(row + 1, col + 2, level + 1);
+
+    count+=countH(row + 2, col + 1, level + 1);
+
+    count+=countH(row - 1, col + 2, level + 1);
+
+    count+=countH(row - 2, col + 1, level + 1);
+
+    count+=countH(row + 1, col - 2, level + 1);
+
+    count+=countH(row + 2, col - 1, level + 1);
+
+    count+=countH(row - 1, col - 2, level + 1);
+
+    count+=countH(row - 2, col - 1, level + 1);
+
+    removeKnight(row, col); //otherwise remove it again
+  }
+  return count;
+}
 
 public void revert(){ //returns board to 0 everywhere
   for (int i = 0; i < board.length; i++){
