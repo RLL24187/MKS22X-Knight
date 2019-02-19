@@ -28,7 +28,20 @@ public class Square{
     y = ycor;
   }
 
+  public void setCoors(int xcor, int ycor){
+    x = xcor;
+    y = ycor;
+  }
+
   public void setMoves(int newMoves){
     moves = newMoves;
+  }
+
+  public void addMove(){
+    moves++;
+  }
+
+  public void subMove(){
+    moves--;
   }
 }
