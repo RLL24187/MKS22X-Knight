@@ -9,6 +9,11 @@ public class KnightBoard{
   //@throws IllegalArgumentException when either parameter is negative.
   public KnightBoard(int startingRows,int startingCols){
     boardSquares = new Square[startingRows][startingCols];
+    for (int i = 0; i < startingRows; i++){
+      for (int j = 0; j < startingCols; j++){
+        boardSquares[i][j] = new Square(i, j, 0);
+      }
+    }
     board = new int[startingRows][startingCols];
     rows = startingRows;
     cols = startingCols;
@@ -119,6 +124,18 @@ public int countSolutions(int startingRow, int startingCol){
   return countH(startingRow, startingCol, 1);
 }
 
+public int countAllSolutions(){
+  int count = 0;
+  for (int i = 0; i < rows; i++){
+    for (int j = 0; j < cols; j++){
+      System.out.println(toString());
+      revert();
+      count += countSolutions(i, j);
+    }
+  }
+  return count;
+}
+
 private boolean addKnight(int r, int c, int level){ //add a knight
   //level goes into the int[][] board
   //reduce the possible moves in boardSquares (later)
@@ -190,30 +207,45 @@ public int countH(int row, int col, int level){
   if (addKnight(row, col, level)){ //can you add the knight?
     //expanded to debug
 
-    count+=countH(row + 1, col + 2, level + 1);
-
-    count+=countH(row + 2, col + 1, level + 1);
-
-    count+=countH(row - 1, col + 2, level + 1);
-
-    count+=countH(row - 2, col + 1, level + 1);
-
-    count+=countH(row + 1, col - 2, level + 1);
-
-    count+=countH(row + 2, col - 1, level + 1);
-
-    count+=countH(row - 1, col - 2, level + 1);
-
-    count+=countH(row - 2, col - 1, level + 1);
-
-    removeKnight(row, col); //otherwise remove it again
+    if (solveH(row + 1, col + 2, level + 1)){
+      count++;
+      revert();
+    }
+    if (solveH(row + 2, col + 1, level + 1)){
+      count++;
+      revert();
+    }
+    if (solveH(row - 1, col + 2, level + 1)){
+      count++;
+      revert();
+    }
+    if (solveH(row - 2, col + 1, level + 1)){
+      count++;
+      revert();
+    }
+    if (solveH(row + 1, col - 2, level + 1)){
+      count++;
+      revert();
+    }
+    if (solveH(row + 2, col - 1, level + 1)){
+      count++;
+      revert();
+    }
+    if (solveH(row - 1, col - 2, level + 1)){
+      count++;
+      revert();
+    }
+    if (solveH(row - 2, col - 1, level + 1)){
+      count++;
+      revert();
+    }
   }
   return count;
 }
 
 public void revert(){ //returns board to 0 everywhere
-  for (int i = 0; i < board.length; i++){
-    for (int j = 0; j < board.length; j++){
+  for (int i = 0; i < rows; i++){
+    for (int j = 0; j < cols; j++){
       board[i][j] = 0;
     }
   }
