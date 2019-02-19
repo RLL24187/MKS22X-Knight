@@ -1,10 +1,21 @@
 public class Driver{
   public static void main(String[] args){
+    //wonky ones
     KnightBoard k2x4 = new KnightBoard(2, 4);
-    KnightBoard k6x6 = new KnightBoard(6, 6);
-    KnightBoard k5x5 = new KnightBoard(5, 5);
-    KnightBoard k7x7 = new KnightBoard(7, 7);
+    KnightBoard k3x4 = new KnightBoard(3, 4);
     KnightBoard k6x8 = new KnightBoard(6, 8);
+
+    //perfect squares
+    KnightBoard k3x3 = new KnightBoard(3, 3);
+    KnightBoard k4x4 = new KnightBoard(4, 4);
+    KnightBoard k5x5 = new KnightBoard(5, 5);
+    KnightBoard k6x6 = new KnightBoard(6, 6);
+    KnightBoard k7x7 = new KnightBoard(7, 7);
+    KnightBoard k8x8 = new KnightBoard(8, 8);
+    KnightBoard k9x9 = new KnightBoard(9, 9);
+    KnightBoard k10x10 = new KnightBoard(10, 10);
+
+
     System.out.println("-----------Testing KnightBoard constructor-----------\n");
     System.out.println("-----------Testing toString-----------\n");
     System.out.println("k5x5: \n");
@@ -48,6 +59,26 @@ public class Driver{
     System.out.println(k2x4.toString());
     k2x4.revert();
 
+    System.out.println("Testing k4x4(1,1): \n");
+    System.out.println(k4x4.solve(1, 1));
+    System.out.println(k4x4.toString());
+    k4x4.revert();
+
+    System.out.println("Testing k4x4(0,1): \n");
+    System.out.println(k4x4.solve(0, 1));
+    System.out.println(k4x4.toString());
+    k4x4.revert();
+
+    System.out.println("Testing k4x4(0,0): \n");
+    System.out.println(k4x4.solve(0, 0));
+    System.out.println(k4x4.toString());
+    k4x4.revert();
+
+    System.out.println("Testing k7x7(0,0): \n");
+    System.out.println(k7x7.solve(0, 0));
+    System.out.println(k7x7.toString());
+    k7x7.revert();
+
     System.out.println("Testing k7x7(5,3): \n");
     System.out.println(k7x7.solve(5, 3));
     System.out.println(k7x7.toString());
@@ -57,5 +88,21 @@ public class Driver{
     System.out.println(k6x8.solve(2, 2));
     System.out.println(k6x8.toString());
     k5x5.revert();
+
+    System.out.println("\n----------Testing countSolutions(int startingRow, int startinCol)----------\n");
+
+    System.out.println("Testing k4x4(0,0): \n");
+    System.out.println(k4x4.countSolutions(0, 0));
+    System.out.println(k4x4.toString());
+    k4x4.revert();
+
+    System.out.println("Testing k5x5(0,0): \n");
+    System.out.println(k5x5.countSolutions(0, 0));
+    System.out.println(k5x5.toString());
+    k5x5.revert();
+
+    k3x4.revert();
+    System.out.println("\n----------Testing countAllSolutions()----------\n");
+    System.out.println("k3x4: should be 8: " + k3x4.countAllSolutions());
   }
 }
