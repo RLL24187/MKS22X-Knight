@@ -128,7 +128,6 @@ public int countAllSolutions(){
   int count = 0;
   for (int i = 0; i < rows; i++){
     for (int j = 0; j < cols; j++){
-      System.out.println(toString());
       revert();
       count += countSolutions(i, j);
     }
@@ -150,6 +149,9 @@ private boolean addKnight(int r, int c, int level){ //add a knight
 }
 
 private boolean removeKnight(int r, int c){ //remove a knight
+  if (r < 0 || c < 0 || r>=rows || c>= cols){ //avoid out of bounds and negatives
+    return false;
+  }
   if (board[r][c]!= 0){
     board[r][c]=0;
     return true;
@@ -201,45 +203,21 @@ private boolean solveH(int row ,int col, int level){
 public int countH(int row, int col, int level){
   int count = 0;
   //Base case:
-  if (level == rows * cols && addKnight(row, col, level)){ //if you've placed down all knights
+  if (level > rows * cols){ //if you've placed down all knights
     return 1; //add 1 to the sum
   }
   if (addKnight(row, col, level)){ //can you add the knight?
     //expanded to debug
-
-    if (solveH(row + 1, col + 2, level + 1)){
-      count++;
-      revert();
-    }
-    if (solveH(row + 2, col + 1, level + 1)){
-      count++;
-      revert();
-    }
-    if (solveH(row - 1, col + 2, level + 1)){
-      count++;
-      revert();
-    }
-    if (solveH(row - 2, col + 1, level + 1)){
-      count++;
-      revert();
-    }
-    if (solveH(row + 1, col - 2, level + 1)){
-      count++;
-      revert();
-    }
-    if (solveH(row + 2, col - 1, level + 1)){
-      count++;
-      revert();
-    }
-    if (solveH(row - 1, col - 2, level + 1)){
-      count++;
-      revert();
-    }
-    if (solveH(row - 2, col - 1, level + 1)){
-      count++;
-      revert();
-    }
+    count+=countH(row+2, col+1, level + 1);
+    count+=countH(row+2, col-1, level + 1);
+    count+=countH(row+1, col+2, level + 1);
+    count+=countH(row+1, col-2, level + 1);
+    count+=countH(row-1, col+2, level + 1);
+    count+=countH(row-1, col-2, level + 1);
+    count+=countH(row-2, col+1, level + 1);
+    count+=countH(row-2, col-1, level + 1);
   }
+  removeKnight(row, col);
   return count;
 }
 
