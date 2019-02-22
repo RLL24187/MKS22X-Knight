@@ -121,7 +121,7 @@ public int countSolutions(int startingRow, int startingCol){
   if (startingRow < 0 || startingCol <0 || startingRow >= rows || startingCol >= cols){
     throw new IllegalArgumentException("Both parameters must be nonnegative and in the range!");
   }
-  return countH(startingRow, startingCol, 1, 0);
+  return countH(startingRow, startingCol, 1);
 }
 
 public int countAllSolutions(){
@@ -138,7 +138,7 @@ public int countAllSolutions(){
   return count;
 }
 
-private boolean addKnight(int r, int c, int level){ //add a knight
+public boolean addKnight(int r, int c, int level){ //add a knight
   //level goes into the int[][] board
   //reduce the possible moves in boardSquares (later)
   if (r < 0 || c < 0 || r>=rows || c>= cols){ //avoid out of bounds and negatives
@@ -151,7 +151,7 @@ private boolean addKnight(int r, int c, int level){ //add a knight
   return false;
 }
 
-private boolean removeKnight(int r, int c){ //remove a knight
+public boolean removeKnight(int r, int c){ //remove a knight
   if (r < 0 || c < 0 || r>=rows || c>= cols){ //avoid out of bounds and negatives
     return false;
   }
@@ -203,11 +203,18 @@ private boolean solveH(int row ,int col, int level){
 }
 // level is the # of the knight
 
-public int countH(int row, int col, int level, int sum){
+public int countH(int row, int col, int level){
   //Base case:
+  System.out.println(toString());
   if (level == rows * cols && addKnight(row, col, level)){ //if you've placed down all knights
-    sum++;
+    //sum++;
+    System.out.println("Got one!");
+    System.out.println(toString());
+    //removeKnight(row, col);
+    return 1;
   }
+  int count = 0;
+  /*
   for (int r = -2; r <= 2; r++){
     if (r==0) r++;
     if (addKnight(row, col, level)){
@@ -226,21 +233,38 @@ public int countH(int row, int col, int level, int sum){
     }
     removeKnight(row, col);
   }
-  //if (addKnight(row, col, level)){ //can you add the knight?
+  */
+  if (addKnight(row, col, level)){ //can you add the knight?
     //expanded to debug
-    /*
+    System.out.println("Case 1\n");
     count+=countH(row+2, col+1, level + 1);
+    //removeKnight(row + 2, col + 1);
+    System.out.println("Case 2\n");
     count+=countH(row+2, col-1, level + 1);
+    //removeKnight(row + 2, col - 1);
+    System.out.println("Case 3\n");
     count+=countH(row+1, col+2, level + 1);
+    //removeKnight(row + 1, col + 2);
+    System.out.println("Case 4\n");
     count+=countH(row+1, col-2, level + 1);
+    //removeKnight(row + 1, col - 2);
+    System.out.println("Case 5\n");
     count+=countH(row-1, col+2, level + 1);
+    //removeKnight(row - 1, col + 2);
+    System.out.println("Case 6\n");
     count+=countH(row-1, col-2, level + 1);
+    //removeKnight(row - 1, col - 2);
+    System.out.println("Case 7\n");
     count+=countH(row-2, col+1, level + 1);
+    //removeKnight(row - 2, col + 1);
+    System.out.println("Case 8\n");
     count+=countH(row-2, col-1, level + 1);
-    */
-  //}
+    //removeKnight(row - 2, col - 1);
+  }
+  //System.out.println("Removing ("+row+","+col+")\n");
   //removeKnight(row, col);
-  return sum;
+  //removeKnight(row, col);
+  return count;
 }
 
 public void revert(){ //returns board to 0 everywhere
