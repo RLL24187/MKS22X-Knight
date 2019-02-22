@@ -25,35 +25,35 @@ public class Driver{
 
 
     System.out.println("-----------Testing addKnight(int row, int col, int level)-----------\n");
-    System.out.println("k5x5(0, 0, 5)--> true"+k5x5.addKnight(0,0,5));
+    System.out.println("k5x5(0, 0, 5)--> true: "+k5x5.addKnight(0,0,5));
     System.out.println(k5x5.toString());
 
-    System.out.println("k5x5(0, 0, 5)--> false"+k5x5.addKnight(0,0,5));
+    System.out.println("k5x5(0, 0, 5)--> false: "+k5x5.addKnight(0,0,5));
     System.out.println(k5x5.toString());
 
-    System.out.println("k5x5(4, 3, 2)--> true"+k5x5.addKnight(4,3,2));
+    System.out.println("k5x5(4, 3, 2)--> true: "+k5x5.addKnight(4,3,2));
     System.out.println(k5x5.toString());
 
-    System.out.println("k5x5(6, 0, 0)--> false"+k5x5.addKnight(6,0,0));
+    System.out.println("k5x5(6, 0, 0)--> false: "+k5x5.addKnight(6,0,0));
     System.out.println(k5x5.toString());
 
-    System.out.println("k5x5(0, -1, 4)--> false"+k5x5.addKnight(0,-1,4));
+    System.out.println("k5x5(0, -1, 4)--> false: "+k5x5.addKnight(0,-1,4));
     System.out.println(k5x5.toString());
 
     System.out.println("-----------Testing removeKnight(int row, int col)-----------\n");
-    System.out.println("k5x5(0,0)--> true"+k5x5.removeKnight(0,0));
+    System.out.println("k5x5(0,0)--> true: "+k5x5.removeKnight(0,0));
     System.out.println(k5x5.toString());
 
-    System.out.println("k5x5(0,0)--> false"+k5x5.removeKnight(0,0));
+    System.out.println("k5x5(0,0)--> false: "+k5x5.removeKnight(0,0));
     System.out.println(k5x5.toString());
 
-    System.out.println("k5x5(4, 3, 2)--> true"+k5x5.removeKnight(4,3));
+    System.out.println("k5x5(4, 3, 2)--> true: "+k5x5.removeKnight(4,3));
     System.out.println(k5x5.toString());
 
-    System.out.println("k5x5(6, 0, 0)--> false"+k5x5.removeKnight(6,0));
+    System.out.println("k5x5(6, 0, 0)--> false: "+k5x5.removeKnight(6,0));
     System.out.println(k5x5.toString());
 
-    System.out.println("k5x5(0, -1, 4)--> false"+k5x5.removeKnight(0,-1));
+    System.out.println("k5x5(0, -1, 4)--> false: "+k5x5.removeKnight(0,-1));
     System.out.println(k5x5.toString());
 
     System.out.println("-----------Testing solve() exceptions-----------\n");
