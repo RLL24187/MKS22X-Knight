@@ -121,10 +121,13 @@ public int countSolutions(int startingRow, int startingCol){
   if (startingRow < 0 || startingCol <0 || startingRow >= rows || startingCol >= cols){
     throw new IllegalArgumentException("Both parameters must be nonnegative and in the range!");
   }
-  return countH(startingRow, startingCol, 1);
+  return countH(startingRow, startingCol, 1, 0);
 }
 
 public int countAllSolutions(){
+  if (rows == 0 || cols == 0){
+    return 1;
+  }
   int count = 0;
   for (int i = 0; i < rows; i++){
     for (int j = 0; j < cols; j++){
@@ -200,14 +203,32 @@ private boolean solveH(int row ,int col, int level){
 }
 // level is the # of the knight
 
-public int countH(int row, int col, int level){
-  int count = 0;
+public int countH(int row, int col, int level, int sum){
   //Base case:
-  if (level > rows * cols){ //if you've placed down all knights
-    return 1; //add 1 to the sum
+  if (level == rows * cols && addKnight(row, col, level)){ //if you've placed down all knights
+    sum++;
   }
-  if (addKnight(row, col, level)){ //can you add the knight?
+  for (int r = -2; r <= 2; r++){
+    if (r==0) r++;
+    if (addKnight(row, col, level)){
+      if (r % 2 == 1){
+        countH(row+r, col + 2, level + 1, sum);
+        removeKnight(row+r, col+2);
+        countH(row+r, col - 2, level + 1, sum);
+        removeKnight(row+r, col-2);
+      }
+      else{
+        countH(row+r, col + 1, level + 1, sum);
+        removeKnight(row+r, col + 1);
+        countH(row+r, col - 1, level + 1, sum);
+        removeKnight(row+r, col - 1);
+      }
+    }
+    removeKnight(row, col);
+  }
+  //if (addKnight(row, col, level)){ //can you add the knight?
     //expanded to debug
+    /*
     count+=countH(row+2, col+1, level + 1);
     count+=countH(row+2, col-1, level + 1);
     count+=countH(row+1, col+2, level + 1);
@@ -216,9 +237,10 @@ public int countH(int row, int col, int level){
     count+=countH(row-1, col-2, level + 1);
     count+=countH(row-2, col+1, level + 1);
     count+=countH(row-2, col-1, level + 1);
-  }
-  removeKnight(row, col);
-  return count;
+    */
+  //}
+  //removeKnight(row, col);
+  return sum;
 }
 
 public void revert(){ //returns board to 0 everywhere
