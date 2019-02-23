@@ -3,6 +3,7 @@ public class Driver{
     //wonky ones
     KnightBoard k2x4 = new KnightBoard(2, 4);
     KnightBoard k3x4 = new KnightBoard(3, 4);
+    KnightBoard k3x5 = new KnightBoard(3, 5);
     KnightBoard k6x8 = new KnightBoard(6, 8);
 
     //perfect squares
@@ -19,7 +20,7 @@ public class Driver{
 
 
     System.out.println("-----------Testing KnightBoard constructor-----------\n");
-    System.out.println("-----------Testing toString-----------\n");
+    /*System.out.println("-----------Testing toString-----------\n");
     System.out.println("k5x5: \n");
     System.out.println(k5x5.toString());
 
@@ -122,6 +123,7 @@ public class Driver{
     System.out.println(k6x8.solve(2, 2));
     System.out.println(k6x8.toString());
     k5x5.revert();
+    */
 
     System.out.println("\n----------Testing countSolutions(int startingRow, int startinCol)----------\n");
 
@@ -140,16 +142,24 @@ public class Driver{
     System.out.println(k3x3.toString());
     k3x3.revert();
 
-    /*System.out.println("Testing k4x4(0,0): \n");
+    System.out.println("Testing k4x4(0,0): \n");
     System.out.println(k4x4.countSolutions(0, 0));
     System.out.println(k4x4.toString());
     k4x4.revert();
 
-    System.out.println("Testing k5x5(0,0): \n");
-    System.out.println(k5x5.countSolutions(0, 0));
-    System.out.println(k5x5.toString());
-    k5x5.revert();
-    */
+    System.out.println("Testing k3x4(0,0): \n");
+    System.out.println(k3x4.countSolutions(0, 0));
+    System.out.println(k3x4.toString());
+    k3x4.revert();
+
+    System.out.println("Testing k3x5(0,0): \n");
+    System.out.println(k3x5.countSolutions(0, 0));
+    System.out.println(k3x5.toString());
+    k3x5.revert();
+    //System.out.println("Testing k5x5(0,0): \n");
+    //System.out.println(k5x5.countSolutions(0, 0)); //got 304
+    //System.out.println(k5x5.toString());
+    //k5x5.revert();
 
     //k3x4.revert();
     //System.out.println("\n----------Testing countAllSolutions()----------\n");
