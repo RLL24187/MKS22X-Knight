@@ -26,27 +26,27 @@ public class KnightBoard{
 *-blank boards display 0's as underscores
 *@return the properly formatted string (see format for toString later in the post)
 */
-public String toString(){
-  String output = "";
-  for (int i = 0; i < rows; i++){
-    for (int j = 0; j < cols; j++){
-      if (board[i][j]>= 10){
-        output+= board[i][j];
+  public String toString(){
+    String output = "";
+    for (int i = 0; i < rows; i++){
+      for (int j = 0; j < cols; j++){
+        if (board[i][j]>= 10){
+          output+= board[i][j];
+        }
+        else if (allZero()){
+          output += " _";
+        }
+        else{
+          output += " "+board[i][j];
+        }
+        if (j!= cols - 1){
+          output+=" ";
+        }
       }
-      else if (allZero()){
-        output += " _";
-      }
-      else{
-        output += " "+board[i][j];
-      }
-      if (j!= cols - 1){
-        output+=" ";
-      }
+      output += "\n";
     }
-    output += "\n";
+    return output;
   }
-  return output;
-}
   /*
   see format for toString below
   blank boards display 0's as underscores
@@ -99,179 +99,180 @@ public String toString(){
   Modifies the board by labeling the moves from 1 (at startingRow,startingCol) up to the area of the board in proper knight move steps.
   @return true when the board is solvable from the specified starting position
  */
-public boolean solve(int startingRow, int startingCol){
-  if (!allZero()){
-    throw new IllegalStateException("solve(int startingRow, int startingCol) only works on blank boards!");
+  public boolean solve(int startingRow, int startingCol){
+    if (!allZero()){
+      throw new IllegalStateException("solve(int startingRow, int startingCol) only works on blank boards!");
+    }
+    if (startingRow < 0 || startingCol <0 || startingRow >= rows || startingCol >= cols){
+      throw new IllegalArgumentException("Both parameters must be nonnegative and in the range!");
+    }
+    return solveH(startingRow, startingCol, 1);
   }
-  if (startingRow < 0 || startingCol <0 || startingRow >= rows || startingCol >= cols){
-    throw new IllegalArgumentException("Both parameters must be nonnegative and in the range!");
-  }
-  return solveH(startingRow, startingCol, 1);
-}
 
   /**
   *@throws IllegalStateException when the board contains non-zero values.
   *@throws IllegalArgumentException when either parameter is negative or out of bounds.
   *@return number of solutions when either parameter is negative
   */
-public int countSolutions(int startingRow, int startingCol){
-  if (!allZero()){
-    throw new IllegalStateException("solve(int startingRow, int startingCol) only works on blank boards!");
-  }
-  if (startingRow < 0 || startingCol <0 || startingRow >= rows || startingCol >= cols){
-    throw new IllegalArgumentException("Both parameters must be nonnegative and in the range!");
-  }
-  return countH(startingRow, startingCol, 1);
-}
-
-public int countAllSolutions(){
-  if (rows == 0 || cols == 0){
-    return 1;
-  }
-  int count = 0;
-  for (int i = 0; i < rows; i++){
-    for (int j = 0; j < cols; j++){
-      revert();
-      count += countSolutions(i, j);
+  public int countSolutions(int startingRow, int startingCol){
+    if (!allZero()){
+      throw new IllegalStateException("solve(int startingRow, int startingCol) only works on blank boards!");
     }
+    if (startingRow < 0 || startingCol <0 || startingRow >= rows || startingCol >= cols){
+      throw new IllegalArgumentException("Both parameters must be nonnegative and in the range!");
+    }
+    int n = countH(startingRow, startingCol, 1);
+    revert();
+    return n;
   }
-  return count;
-}
 
-public boolean addKnight(int r, int c, int level){ //add a knight
-  //level goes into the int[][] board
-  //reduce the possible moves in boardSquares (later)
-  if (r < 0 || c < 0 || r>=rows || c>= cols){ //avoid out of bounds and negatives
+  public int countAllSolutions(){
+    if (rows == 0 || cols == 0){
+      return 1;
+    }
+    int count = 0;
+    for (int i = 0; i < rows; i++){
+      for (int j = 0; j < cols; j++){
+        revert();
+        count += countSolutions(i, j);
+      }
+    }
+    return count;
+  }
+
+  public boolean addKnight(int r, int c, int level){ //add a knight
+    //level goes into the int[][] board
+    //reduce the possible moves in boardSquares (later)
+    if (r < 0 || c < 0 || r>=rows || c>= cols){ //avoid out of bounds and negatives
+      return false;
+    }
+    if (board[r][c]==0){ //if no knight added here
+      board[r][c]=level; //set num equal to level
+      return true;
+    }
     return false;
   }
-  if (board[r][c]==0){ //if no knight added here
-    board[r][c]=level; //set num equal to level
-    return true;
-  }
-  return false;
-}
 
-public boolean removeKnight(int r, int c){ //remove a knight
-  if (r < 0 || c < 0 || r>=rows || c>= cols){ //avoid out of bounds and negatives
+  public boolean removeKnight(int r, int c){ //remove a knight
+    if (r < 0 || c < 0 || r>=rows || c>= cols){ //avoid out of bounds and negatives
+      return false;
+    }
+    if (board[r][c]!= 0){
+      board[r][c]=0;
+      return true;
+    }
     return false;
   }
-  if (board[r][c]!= 0){
-    board[r][c]=0;
-    return true;
+
+  //Suggestion:
+  //row is starting xcor
+  //col is starting ycor
+  //level is the number to place in the box
+  private boolean solveH(int row ,int col, int level){
+    //Base case:
+    if (level == rows * cols && addKnight(row, col, level)){ //if you've placed down all knights
+      return true; //return true
+    }
+    if (addKnight(row, col, level)){ //can you add the knight?
+      //expanded to debug
+      if (solveH(row + 1, col + 2, level + 1)){
+        return true;
+      }
+      if (solveH(row + 2, col + 1, level + 1)){
+        return true;
+      }
+      if (solveH(row - 1, col + 2, level + 1)){
+        return true;
+      }
+      if (solveH(row - 2, col + 1, level + 1)){
+        return true;
+      }
+      if (solveH(row + 1, col - 2, level + 1)){
+        return true;
+      }
+      if (solveH(row + 2, col - 1, level + 1)){
+        return true;
+      }
+      if (solveH(row - 1, col - 2, level + 1)){
+        return true;
+      }
+      if (solveH(row - 2, col - 1, level + 1)){
+        return true;
+      }
+      removeKnight(row, col); //otherwise remove it again
+    }
+    return false;
   }
-  return false;
-}
+  // level is the # of the knight
 
-//Suggestion:
-//row is starting xcor
-//col is starting ycor
-//level is the number to place in the box
-private boolean solveH(int row ,int col, int level){
-  //Base case:
-  if (level == rows * cols && addKnight(row, col, level)){ //if you've placed down all knights
-    return true; //return true
+  public int countH(int row, int col, int level){
+    //Base case:
+    //System.out.println(toString());
+    if (level == rows * cols && addKnight(row, col, level)){ //if you've placed down all knights
+      //sum++;
+      //System.out.println("Got one!");
+      //System.out.println(toString());
+      return 1;
+    }
+    int count = 0;
+    if (addKnight(row, col, level)){ //can you add the knight?
+      //expanded to debug
+      //System.out.println("Case 1\n");
+      count+=countH(row+2, col+1, level + 1);
+      if (inRange(row + 2, col + 1))
+        if(board[row+2][col+1] == level + 1)
+          removeKnight(row + 2, col + 1);
+
+      //System.out.println("Case 2\n");
+      count+=countH(row+2, col-1, level + 1);
+      if (inRange(row + 2, col - 1))
+        if(board[row+2][col-1] == level + 1)
+          removeKnight(row + 2, col - 1);
+
+      //System.out.println("Case 3\n");
+      count+=countH(row+1, col+2, level + 1);
+      if (inRange(row + 1, col + 2))
+        if(board[row+1][col+2] == level + 1)
+          removeKnight(row + 1, col + 2);
+
+      //System.out.println("Case 4\n");
+      count+=countH(row+1, col-2, level + 1);
+      if (inRange(row + 1, col - 2))
+        if(board[row+1][col-2] == level + 1)
+          removeKnight(row + 1, col - 2);
+
+      //System.out.println("Case 5\n");
+      count+=countH(row-1, col+2, level + 1);
+      if (inRange(row - 1, col + 2))
+        if(board[row-1][col+2] == level + 1)
+          removeKnight(row - 1, col + 2);
+
+      //System.out.println("Case 6\n");
+      count+=countH(row-1, col-2, level + 1);
+      if (inRange(row - 1, col - 2))
+        if(board[row-1][col-2] == level + 1)
+          removeKnight(row - 1, col - 2);
+
+      //System.out.println("Case 7\n");
+      count+=countH(row-2, col+1, level + 1);
+      if (inRange(row - 2, col + 1))
+        if(board[row-2][col+1] == level + 1)
+          removeKnight(row - 2, col + 1);
+
+      //System.out.println("Case 8\n");
+      count+=countH(row-2, col-1, level + 1);
+      if (inRange(row - 2, col - 1))
+        if(board[row-2][col-1] == level + 1)
+          removeKnight(row - 2, col - 1);
+    }
+    //System.out.println("Removing ("+row+","+col+")\n");
+    return count;
   }
-  if (addKnight(row, col, level)){ //can you add the knight?
-    //expanded to debug
-    if (solveH(row + 1, col + 2, level + 1)){
-      return true;
-    }
-    if (solveH(row + 2, col + 1, level + 1)){
-      return true;
-    }
-    if (solveH(row - 1, col + 2, level + 1)){
-      return true;
-    }
-    if (solveH(row - 2, col + 1, level + 1)){
-      return true;
-    }
-    if (solveH(row + 1, col - 2, level + 1)){
-      return true;
-    }
-    if (solveH(row + 2, col - 1, level + 1)){
-      return true;
-    }
-    if (solveH(row - 1, col - 2, level + 1)){
-      return true;
-    }
-    if (solveH(row - 2, col - 1, level + 1)){
-      return true;
-    }
-    removeKnight(row, col); //otherwise remove it again
-  }
-  return false;
-}
-// level is the # of the knight
 
-public int countH(int row, int col, int level){
-  //Base case:
-  System.out.println(toString());
-  if (level == rows * cols && addKnight(row, col, level)){ //if you've placed down all knights
-    //sum++;
-    System.out.println("Got one!");
-    System.out.println(toString());
-    //removeKnight(row, col);
-    return 1;
-  }
-  int count = 0;
-  if (addKnight(row, col, level)){ //can you add the knight?
-    //expanded to debug
-    System.out.println("Case 1\n");
-    count+=countH(row+2, col+1, level + 1);
-    if (inRange(row + 2, col + 1))
-      if(board[row+2][col+1] == level + 1)
-        removeKnight(row + 2, col + 1);
-
-    System.out.println("Case 2\n");
-    count+=countH(row+2, col-1, level + 1);
-    if (inRange(row + 2, col - 1))
-      if(board[row+2][col-1] == level + 1)
-        removeKnight(row + 2, col - 1);
-
-    System.out.println("Case 3\n");
-    count+=countH(row+1, col+2, level + 1);
-    if (inRange(row + 1, col + 2))
-      if(board[row+1][col+2] == level + 1)
-        removeKnight(row + 1, col + 2);
-
-    System.out.println("Case 4\n");
-    count+=countH(row+1, col-2, level + 1);
-    if (inRange(row + 1, col - 2))
-      if(board[row+1][col-2] == level + 1)
-        removeKnight(row + 1, col - 2);
-
-    System.out.println("Case 5\n");
-    count+=countH(row-1, col+2, level + 1);
-    if (inRange(row - 1, col + 2))
-      if(board[row-1][col+2] == level + 1)
-        removeKnight(row - 1, col + 2);
-
-    System.out.println("Case 6\n");
-    count+=countH(row-1, col-2, level + 1);
-    if (inRange(row - 1, col - 2))
-      if(board[row-1][col-2] == level + 1)
-        removeKnight(row - 1, col - 2);
-
-    System.out.println("Case 7\n");
-    count+=countH(row-2, col+1, level + 1);
-    if (inRange(row - 2, col + 1))
-      if(board[row-2][col+1] == level + 1)
-        removeKnight(row - 2, col + 1);
-
-    System.out.println("Case 8\n");
-    count+=countH(row-2, col-1, level + 1);
-    if (inRange(row - 2, col - 1))
-      if(board[row-2][col-1] == level + 1)
-        removeKnight(row - 2, col - 1);
-  }
-  //System.out.println("Removing ("+row+","+col+")\n");
-  //removeKnight(row, col);
-  return count;
-}
-
-  public boolean inRange(int r, int c){
+  public boolean inRange(int r, int c){ //checks if the row and col are in range
     return (r < rows && r >= 0 && c < cols && c>= 0);
   }
+
   public void revert(){ //returns board to 0 everywhere
     for (int i = 0; i < rows; i++){
       for (int j = 0; j < cols; j++){
