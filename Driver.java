@@ -4,6 +4,8 @@ public class Driver{
     KnightBoard k2x4 = new KnightBoard(2, 4);
     KnightBoard k3x4 = new KnightBoard(3, 4);
     KnightBoard k3x5 = new KnightBoard(3, 5);
+    KnightBoard k4x5 = new KnightBoard(4, 5);
+    KnightBoard k4x6 = new KnightBoard(4, 6);
     KnightBoard k6x8 = new KnightBoard(6, 8);
 
     //perfect squares
@@ -127,35 +129,46 @@ public class Driver{
 
     System.out.println("\n----------Testing countSolutions(int startingRow, int startinCol)----------\n");
 
-    System.out.println("Testing k1x1(0,0): \n");
+    /*System.out.println("Testing k1x1(0,0): \n");
     System.out.println(k1x1.countSolutions(0, 0));
-    System.out.println(k1x1.toString());
+    //System.out.println(k1x1.toString());
     k1x1.revert();
 
     System.out.println("Testing k2x2(0,0): \n");
     System.out.println(k2x2.countSolutions(0, 0));
-    System.out.println(k2x2.toString());
+    //System.out.println(k2x2.toString());
     k2x2.revert();
 
     System.out.println("Testing k3x3(0,0): \n");
     System.out.println(k3x3.countSolutions(0, 0));
-    System.out.println(k3x3.toString());
+    //System.out.println(k3x3.toString());
     k3x3.revert();
 
     System.out.println("Testing k4x4(0,0): \n");
     System.out.println(k4x4.countSolutions(0, 0));
-    System.out.println(k4x4.toString());
+    //System.out.println(k4x4.toString());
     k4x4.revert();
+    */
 
     System.out.println("Testing k3x4(0,0): \n");
     System.out.println(k3x4.countSolutions(0, 0));
-    System.out.println(k3x4.toString());
+    //System.out.println(k3x4.toString());
     k3x4.revert();
 
     System.out.println("Testing k3x5(0,0): \n");
     System.out.println(k3x5.countSolutions(0, 0));
-    System.out.println(k3x5.toString());
+    //System.out.println(k3x5.toString());
     k3x5.revert();
+
+    System.out.println("Testing k4x5(0,0): \n");
+    System.out.println(k4x5.countSolutions(0, 0));
+    //System.out.println(k4x5.toString());
+    k4x5.revert();
+
+    System.out.println("Testing k4x6(0,0): \n");
+    System.out.println(k4x6.countSolutions(0, 0));
+    //System.out.println(k4x6.toString());
+    k4x6.revert();
     //System.out.println("Testing k5x5(0,0): \n");
     //System.out.println(k5x5.countSolutions(0, 0)); //got 304
     //System.out.println(k5x5.toString());
