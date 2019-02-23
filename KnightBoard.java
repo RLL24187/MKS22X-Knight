@@ -140,7 +140,7 @@ public class KnightBoard{
     return count;
   }
 
-  public boolean addKnight(int r, int c, int level){ //add a knight
+  private boolean addKnight(int r, int c, int level){ //add a knight
     //level goes into the int[][] board
     //reduce the possible moves in boardSquares (later)
     if (r < 0 || c < 0 || r>=rows || c>= cols){ //avoid out of bounds and negatives
@@ -153,7 +153,7 @@ public class KnightBoard{
     return false;
   }
 
-  public boolean removeKnight(int r, int c){ //remove a knight
+  private boolean removeKnight(int r, int c){ //remove a knight
     if (r < 0 || c < 0 || r>=rows || c>= cols){ //avoid out of bounds and negatives
       return false;
     }
@@ -170,7 +170,7 @@ public class KnightBoard{
   //level is the number to place in the box
   private boolean solveH(int row ,int col, int level){
     //Base case:
-    if (level == rows * cols && addKnight(row, col, level)){ //if you've placed down all knights
+    if (level == rows * cols && addKnight(row, col, level) || (rows == 0 && cols == 0)){ //if you've placed down all knights
       return true; //return true
     }
     if (addKnight(row, col, level)){ //can you add the knight?
@@ -201,6 +201,7 @@ public class KnightBoard{
       }
       removeKnight(row, col); //otherwise remove it again
     }
+    revert(); //return to normal if all fails
     return false;
   }
   // level is the # of the knight
