@@ -1,20 +1,19 @@
 public class KnightBoard{
   //KnightBoard has 3 public methods and a constructor, a private helper is needed as well.
   //Fields
-  private Square[][] boardSquares;
-  private int[][] board;
+  private Square[] squareMoves;
+  //list of squares to move to
+  private int[][] board, intMoves;
+  //board is the displayed order
+  //intMoves is a list of the number of possible moves from a Square
   private int rows;
   private int cols;
 
   //@throws IllegalArgumentException when either parameter is negative.
   public KnightBoard(int startingRows,int startingCols){
-    boardSquares = new Square[startingRows][startingCols];
-    for (int i = 0; i < startingRows; i++){
-      for (int j = 0; j < startingCols; j++){
-        boardSquares[i][j] = new Square(i, j, 0);
-      }
-    }
+    squareMoves = new Square[startingRows][startingCols];
     board = new int[startingRows][startingCols];
+    intMoves = new int[startingRows][startingCols];
     rows = startingRows;
     cols = startingCols;
   }
@@ -143,7 +142,7 @@ public class KnightBoard{
   private boolean addKnight(int r, int c, int level){ //add a knight
     //level goes into the int[][] board
     //reduce the possible moves in boardSquares (later)
-    if (r < 0 || c < 0 || r>=rows || c>= cols){ //avoid out of bounds and negatives
+    if (!inRange(r,c)){ //avoid out of bounds and negatives
       return false;
     }
     if (board[r][c]==0){ //if no knight added here
@@ -154,7 +153,7 @@ public class KnightBoard{
   }
 
   private boolean removeKnight(int r, int c){ //remove a knight
-    if (r < 0 || c < 0 || r>=rows || c>= cols){ //avoid out of bounds and negatives
+    if (!inRange(r,c)){ //avoid out of bounds and negatives
       return false;
     }
     if (board[r][c]!= 0){
