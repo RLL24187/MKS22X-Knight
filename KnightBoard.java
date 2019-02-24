@@ -15,7 +15,7 @@ public class KnightBoard{
     intMoves = new int[startingRows][startingCols];
     rows = startingRows;
     cols = startingCols;
-    //Below is for sizes 4x4 and up
+    //Make the number of moves for each Square
     for (int r = 0; r < rows; r++){
       for (int c = 0; c < cols; c++){
         if (inRange(r+2, c+1)){
@@ -50,44 +50,6 @@ public class KnightBoard{
           intMoves[r][c]++;
           squareMoves.add(new Square(r-1,c-2));
         }
-        /*
-        if (r > 1 && r < rows - 2 && c > 1 && c < cols - 2){ //somewhere in the middle
-          intMoves[r][c]=8;
-        }
-        else if (r == 0 || r == rows - 1){ //on the top and bottom border
-          if (c > 1 && c < cols - 2){
-            intMoves[r][c]=4;
-          }
-          else if (c == 0 || c == cols - 1){
-            intMoves[r][c]=2;
-          }
-          else if (c == 1 || c == cols - 2){
-            intMoves[r][c]=3;
-          }
-        }
-        else if (c == 0 || c == cols - 1){ //on the left and right border
-          if (r > 1 && r < rows - 2){
-            intMoves[r][c]=4;
-          }
-          else if (r == 0 || r == rows - 1){
-            intMoves[r][c]=2;
-          }
-          else if (r == 1 || r == rows - 2){
-            intMoves[r][c]=3;
-          }
-        }
-        else if ( //sorta corner things
-        (r==1 && c==1)||
-        (r==1 && c==cols-2)||
-        (r==rows-2 && c==cols-2)||
-        (r==rows-2 && c==1)
-        ){
-          intMoves[r][c]=4;
-        }
-        else{
-          intMoves[r][c]=6;
-        }
-        */
       }
     }
   }
