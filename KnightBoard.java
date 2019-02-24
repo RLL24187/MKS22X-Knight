@@ -1,21 +1,95 @@
+import java.util.ArrayList;
 public class KnightBoard{
   //KnightBoard has 3 public methods and a constructor, a private helper is needed as well.
   //Fields
-  private Square[] squareMoves;
+  private ArrayList<Square> squareMoves = new ArrayList<Square>(8);
   //list of squares to move to
   private int[][] board, intMoves;
   //board is the displayed order
-  //intMoves is a list of the number of possible moves from a Square
   private int rows;
   private int cols;
 
   //@throws IllegalArgumentException when either parameter is negative.
   public KnightBoard(int startingRows,int startingCols){
-    squareMoves = new Square[startingRows][startingCols];
     board = new int[startingRows][startingCols];
     intMoves = new int[startingRows][startingCols];
     rows = startingRows;
     cols = startingCols;
+    //Below is for sizes 4x4 and up
+    for (int r = 0; r < rows; r++){
+      for (int c = 0; c < cols; c++){
+        if (inRange(r+2, c+1)){
+          intMoves[r][c]++;
+          squareMoves.add(new Square(r+2,c+1));
+        }
+        if (inRange(r+2, c-1)){
+          intMoves[r][c]++;
+          squareMoves.add(new Square(r+2,c-1));
+        }
+        if (inRange(r-2, c+1)){
+          intMoves[r][c]++;
+          squareMoves.add(new Square(r-2,c+1));
+        }
+        if (inRange(r-2, c-1)){
+          intMoves[r][c]++;
+          squareMoves.add(new Square(r-2,c-1));
+        }
+        if (inRange(r+1, c+2)){
+          intMoves[r][c]++;
+          squareMoves.add(new Square(r+1,c+2));
+        }
+        if (inRange(r+1, c-2)){
+          intMoves[r][c]++;
+          squareMoves.add(new Square(r+1,c-2));
+        }
+        if (inRange(r-1, c+2)){
+          intMoves[r][c]++;
+          squareMoves.add(new Square(r-1,c+2));
+        }
+        if (inRange(r-1, c-2)){
+          intMoves[r][c]++;
+          squareMoves.add(new Square(r-1,c-2));
+        }
+        /*
+        if (r > 1 && r < rows - 2 && c > 1 && c < cols - 2){ //somewhere in the middle
+          intMoves[r][c]=8;
+        }
+        else if (r == 0 || r == rows - 1){ //on the top and bottom border
+          if (c > 1 && c < cols - 2){
+            intMoves[r][c]=4;
+          }
+          else if (c == 0 || c == cols - 1){
+            intMoves[r][c]=2;
+          }
+          else if (c == 1 || c == cols - 2){
+            intMoves[r][c]=3;
+          }
+        }
+        else if (c == 0 || c == cols - 1){ //on the left and right border
+          if (r > 1 && r < rows - 2){
+            intMoves[r][c]=4;
+          }
+          else if (r == 0 || r == rows - 1){
+            intMoves[r][c]=2;
+          }
+          else if (r == 1 || r == rows - 2){
+            intMoves[r][c]=3;
+          }
+        }
+        else if ( //sorta corner things
+        (r==1 && c==1)||
+        (r==1 && c==cols-2)||
+        (r==rows-2 && c==cols-2)||
+        (r==rows-2 && c==1)
+        ){
+          intMoves[r][c]=4;
+        }
+        else{
+          intMoves[r][c]=6;
+        }
+        */
+      }
+    }
   }
 
     //Initialize the board to the correct size and make them all 0's
@@ -80,6 +154,19 @@ public class KnightBoard{
   *I will not be testing boards that have a rows*cols that is >= 100, as the program would take a long time to complete.
   */
 
+  public String toStringMoves(){
+    String output = "";
+    for (int i = 0; i < rows; i++){
+      for (int j = 0; j < cols; j++){
+        output+=intMoves[i][j];
+        if (j!=cols-1){
+          output+=" ";
+        }
+      }
+      output += "\n";
+    }
+    return output;
+  }
   //Checks to see if all spaces are 0s
   private boolean allZero(){
     for (int i = 0; i < rows; i++){
