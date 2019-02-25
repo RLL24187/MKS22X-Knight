@@ -234,12 +234,10 @@ public class KnightBoard{
 
   private boolean removeKnight(int r, int c){ //remove a knight
     if (!inRange(r,c)){ //avoid out of bounds and negatives
-      //System.out.println("Not in range: ("+r+","+c+")");
       return false;
     }
     if (board[r][c]!= 0){
       board[r][c]=0;
-      //System.out.println("Removed!");
       for (int s = 0; s < squareMoves.length; s++){
         //for each square in the set of moves, increase the number of moves by 1
         //check if in range first
@@ -250,7 +248,6 @@ public class KnightBoard{
       }
       return true;
     }
-    //System.out.println("board[r][c] not 0: ("+ r+","+c+"): "+board[r][c]);
     return false;
   }
 
@@ -263,7 +260,7 @@ public class KnightBoard{
     if (level == rows * cols+1){ //if you've placed down all knights
       return true; //return true
     }
-    List<Square> possibilities = new ArrayList<Square>(8);
+    ArrayList<Square> possibilities = new ArrayList<Square>(8);
     //actual list of Squares to move to
 
 		for (int s = 0; s < squareMoves.length; s++){
@@ -275,10 +272,10 @@ public class KnightBoard{
 		Collections.sort(possibilities); //sort by moves
     for (int s = 0; s < possibilities.size(); s++){ //loop through each possibile Square
       addKnight(possibilities.get(s).getRow(),possibilities.get(s).getCol(),level);
-      if (solveH(possibilities.get(s).getRow(),possibilities.get(s).getCol(), level+1)){
+      if (solveH(possibilities.get(s).getRow(),possibilities.get(s).getCol(), level+1)){ //recursive part
         return true;
       }
-      removeKnight(possibilities.get(s).getRow(),possibilities.get(s).getCol());
+      removeKnight(possibilities.get(s).getRow(),possibilities.get(s).getCol()); //remove if false
     }
     return false;
     /*
