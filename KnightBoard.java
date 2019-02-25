@@ -225,14 +225,11 @@ public class KnightBoard{
         //for each square in the set of moves, reduce the number of moves by 1
         //check if in range first
         if (inRange(squareMoves[s])){
-          squares[squareMoves.getXcor()][squareMoves.getYcor()].subMove();
+          squares[squareMoves.getXcor()][squareMoves.getYcor()].subMove(); //decrease number of moves
+          //now translate the possible moves up r units and right c units
+          squareMoves[s].translate(r, c);
         }
-        intMoves[s.getXcor()][s.getYcor()]--;
-        squareMoves.get(s).subMove();
-        //now translate the possible moves up r units and right c units
-        squareMoves.get(s).translate(r, c);
       }
-
       return true;
     }
     return false;
@@ -246,8 +243,12 @@ public class KnightBoard{
       board[r][c]=0;
       for (int s = 0; s < squareMoves.size(); s++){
         //for each square in the set of moves, increase the number of moves by 1
-        intMoves[s.getXcor()][s.getYcor()]++;
-        squareMoves.get(s).addMove();
+        //check if in range first
+        if (inRange(squareMoves[s])){
+          squares[squareMoves.getXcor()][squareMoves.getYcor()].addMove(); //add number of moves
+          //now translate the possible moves up r units and right c units
+          squareMoves[s].translate(r, c);
+        }
       }
       return true;
     }
