@@ -55,4 +55,9 @@ public class Square implements Comparable<Square>{
   public Square translate(int r, int c){
     return new Square(x+r, y+c);
   }
+
+  //same as above but square as parameter
+  public Square translate(Square s){
+    return new Square(s.x+x, s.y+y);
+  }
 }
