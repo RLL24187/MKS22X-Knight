@@ -33,6 +33,7 @@ public class KnightBoard{
 
   //@throws IllegalArgumentException when either parameter is negative.
   public KnightBoard(int startingRows,int startingCols){
+    if (rows <= 0 || cols <= 0) throw new IllegalArgumentException();
     board = new int[startingRows][startingCols];
     squares = new Square[startingRows][startingCols];
     rows = startingRows;
@@ -43,35 +44,27 @@ public class KnightBoard{
         squares[r][c]=new Square(r, c);
         if (inRange(r+2, c+1)){
           squares[r][c].addMove(); //increase number of moves from Squares[r][c]
-          //squareMoves.add(new Square(r+2,c+1));
         }
         if (inRange(r+2, c-1)){
           squares[r][c].addMove();
-          //squareMoves.add(new Square(r+2,c-1));
         }
         if (inRange(r-2, c+1)){
           squares[r][c].addMove();
-          //squareMoves.add(new Square(r-2,c+1));
         }
         if (inRange(r-2, c-1)){
           squares[r][c].addMove();
-          //squareMoves.add(new Square(r-2,c-1));
         }
         if (inRange(r+1, c+2)){
           squares[r][c].addMove();
-          //squareMoves.add(new Square(r+1,c+2));
         }
         if (inRange(r+1, c-2)){
           squares[r][c].addMove();
-          //squareMoves.add(new Square(r+1,c-2));
         }
         if (inRange(r-1, c+2)){
           squares[r][c].addMove();
-          //squareMoves.add(new Square(r-1,c+2));
         }
         if (inRange(r-1, c-2)){
           squares[r][c].addMove();
-          //squareMoves.add(new Square(r-1,c-2));
         }
       }
     }
@@ -152,6 +145,7 @@ public class KnightBoard{
     }
     return output;
   }
+
   //Checks to see if all spaces are 0s
   private boolean allZero(){
     for (int i = 0; i < rows; i++){
