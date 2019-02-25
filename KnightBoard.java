@@ -3,9 +3,20 @@ public class KnightBoard{
   //KnightBoard has 3 public methods and a constructor, a private helper is needed as well.
   //Fields
   private ArrayList<Square> squareMoves = new ArrayList<Square>(8);
+  squareMoves.add(new Square(2, 1));
+  squareMoves.add(new Square(2, -1));
+  squareMoves.add(new Square(1, 2));
+  squareMoves.add(new Square(1, -2));
+  squareMoves.add(new Square(-1, 2));
+  squareMoves.add(new Square(-1, -2));
+  squareMoves.add(new Square(-2, 1));
+  squareMoves.add(new Square(-2. -1));
   //list of squares to move to
+
   private int[][] board, intMoves;
   //board is the displayed order
+  private Square[][] squares;
+  //board of Squares
   private int rows;
   private int cols;
 
@@ -13,6 +24,7 @@ public class KnightBoard{
   public KnightBoard(int startingRows,int startingCols){
     board = new int[startingRows][startingCols];
     intMoves = new int[startingRows][startingCols];
+    squares = new Square[startingRows][startingCols];
     rows = startingRows;
     cols = startingCols;
     //Make the number of moves for each Square
@@ -51,6 +63,7 @@ public class KnightBoard{
           squareMoves.add(new Square(r-1,c-2));
         }
       }
+      squares[r][c].setMoves(intMoves[r][c]);
     }
   }
 
@@ -174,6 +187,8 @@ public class KnightBoard{
     return n;
   }
 
+  //not actually mandatory just felt curious :P
+  //counts up all solutions from all positions on the board
   public int countAllSolutions(){
     if (rows == 0 || cols == 0){
       return 1;
@@ -196,6 +211,14 @@ public class KnightBoard{
     }
     if (board[r][c]==0){ //if no knight added here
       board[r][c]=level; //set num equal to level
+      for (int s = 0; s < squareMoves.size(); s++){
+        //for each square in the set of moves, reduce the number of moves by 1
+        intMoves[s.getXcor()][s.getYcor()]--;
+        squareMoves.get(s).subMove();
+        //now translate the possible moves up r units and right c units
+        squareMoves.get(s).translate(r, c);
+      }
+
       return true;
     }
     return false;
@@ -207,6 +230,11 @@ public class KnightBoard{
     }
     if (board[r][c]!= 0){
       board[r][c]=0;
+      for (int s = 0; s < squareMoves.size(); s++){
+        //for each square in the set of moves, increase the number of moves by 1
+        intMoves[s.getXcor()][s.getYcor()]++;
+        squareMoves.get(s).addMove();
+      }
       return true;
     }
     return false;
