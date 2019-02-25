@@ -1,8 +1,8 @@
-import java.util.ArrayList;
+//import java.util.ArrayList;
 public class KnightBoard{
   //KnightBoard has 3 public methods and a constructor, a private helper is needed as well.
   //Fields
-  private ArrayList<Square> squareMoves = new ArrayList<Square>(8);
+  /*private ArrayList<Square> squareMoves = new ArrayList<Square>(8);
   squareMoves.add(new Square(2, 1));
   squareMoves.add(new Square(2, -1));
   squareMoves.add(new Square(1, 2));
@@ -11,9 +11,20 @@ public class KnightBoard{
   squareMoves.add(new Square(-1, -2));
   squareMoves.add(new Square(-2, 1));
   squareMoves.add(new Square(-2. -1));
+  */
+  private Square[] squareMoves = new Square{
+    new Square( 2,  1),
+    new Square( 2, -1),
+    new Square( 1,  2),
+    new Square( 1, -2),
+    new Square(-1,  2),
+    new Square(-1, -2),
+    new Square(-2,  1),
+    new Square(-2, -1)
+  };
   //list of squares to move to
 
-  private int[][] board, intMoves;
+  private int[][] board;
   //board is the displayed order
   private Square[][] squares;
   //board of Squares
@@ -31,39 +42,38 @@ public class KnightBoard{
     for (int r = 0; r < rows; r++){
       for (int c = 0; c < cols; c++){
         if (inRange(r+2, c+1)){
-          intMoves[r][c]++;
-          squareMoves.add(new Square(r+2,c+1));
+          squares[r][c].addMove(); //increase number of moves from Squares[r][c]
+          //squareMoves.add(new Square(r+2,c+1));
         }
         if (inRange(r+2, c-1)){
-          intMoves[r][c]++;
-          squareMoves.add(new Square(r+2,c-1));
+          squares[r][c].addMove();
+          //squareMoves.add(new Square(r+2,c-1));
         }
         if (inRange(r-2, c+1)){
-          intMoves[r][c]++;
-          squareMoves.add(new Square(r-2,c+1));
+          squares[r][c].addMove();
+          //squareMoves.add(new Square(r-2,c+1));
         }
         if (inRange(r-2, c-1)){
-          intMoves[r][c]++;
-          squareMoves.add(new Square(r-2,c-1));
+          squares[r][c].addMove();
+          //squareMoves.add(new Square(r-2,c-1));
         }
         if (inRange(r+1, c+2)){
-          intMoves[r][c]++;
-          squareMoves.add(new Square(r+1,c+2));
+          squares[r][c].addMove();
+          //squareMoves.add(new Square(r+1,c+2));
         }
         if (inRange(r+1, c-2)){
-          intMoves[r][c]++;
-          squareMoves.add(new Square(r+1,c-2));
+          squares[r][c].addMove();
+          //squareMoves.add(new Square(r+1,c-2));
         }
         if (inRange(r-1, c+2)){
-          intMoves[r][c]++;
-          squareMoves.add(new Square(r-1,c+2));
+          squares[r][c].addMove();
+          //squareMoves.add(new Square(r-1,c+2));
         }
         if (inRange(r-1, c-2)){
-          intMoves[r][c]++;
-          squareMoves.add(new Square(r-1,c-2));
+          squares[r][c].addMove();
+          //squareMoves.add(new Square(r-1,c-2));
         }
       }
-      squares[r][c].setMoves(intMoves[r][c]);
     }
   }
 
@@ -133,7 +143,7 @@ public class KnightBoard{
     String output = "";
     for (int i = 0; i < rows; i++){
       for (int j = 0; j < cols; j++){
-        output+=intMoves[i][j];
+        output+=squares[i][j].getMoves();
         if (j!=cols-1){
           output+=" ";
         }
@@ -211,8 +221,12 @@ public class KnightBoard{
     }
     if (board[r][c]==0){ //if no knight added here
       board[r][c]=level; //set num equal to level
-      for (int s = 0; s < squareMoves.size(); s++){
+      for (int s = 0; s < squareMoves.length; s++){
         //for each square in the set of moves, reduce the number of moves by 1
+        //check if in range first
+        if (inRange(squareMoves[s])){
+          squares[squareMoves.getXcor()][squareMoves.getYcor()].subMove();
+        }
         intMoves[s.getXcor()][s.getYcor()]--;
         squareMoves.get(s).subMove();
         //now translate the possible moves up r units and right c units
