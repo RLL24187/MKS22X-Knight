@@ -1,4 +1,4 @@
-//import java.util.ArrayList;
+import java.util.*;
 public class KnightBoard{
   //KnightBoard has 3 public methods and a constructor, a private helper is needed as well.
   //Fields
@@ -12,7 +12,7 @@ public class KnightBoard{
   squareMoves.add(new Square(-2, 1));
   squareMoves.add(new Square(-2. -1));
   */
-  private Square[] squareMoves = new Square{
+  private Square[] squareMoves = {
     new Square( 2,  1),
     new Square( 2, -1),
     new Square( 1,  2),
@@ -22,7 +22,10 @@ public class KnightBoard{
     new Square(-2,  1),
     new Square(-2, -1)
   };
-  //list of squares to move to
+  //list of squares to move to (relative locations for translation)
+
+  private ArrayList<Square> possibilities = new ArrayList<Square>(8);
+  //actual list of Squares to move to
 
   private int[][] board;
   //board is the displayed order
@@ -34,13 +37,13 @@ public class KnightBoard{
   //@throws IllegalArgumentException when either parameter is negative.
   public KnightBoard(int startingRows,int startingCols){
     board = new int[startingRows][startingCols];
-    intMoves = new int[startingRows][startingCols];
     squares = new Square[startingRows][startingCols];
     rows = startingRows;
     cols = startingCols;
     //Make the number of moves for each Square
     for (int r = 0; r < rows; r++){
       for (int c = 0; c < cols; c++){
+        squares[r][c]=new Square(r, c);
         if (inRange(r+2, c+1)){
           squares[r][c].addMove(); //increase number of moves from Squares[r][c]
           //squareMoves.add(new Square(r+2,c+1));
@@ -225,9 +228,9 @@ public class KnightBoard{
         //for each square in the set of moves, reduce the number of moves by 1
         //check if in range first
         if (inRange(squareMoves[s])){
-          squares[squareMoves.getXcor()][squareMoves.getYcor()].subMove(); //decrease number of moves
+          squares[squareMoves[s].getXcor()][squareMoves[s].getYcor()].subMove(); //decrease number of moves
           //now translate the possible moves up r units and right c units
-          squareMoves[s].translate(r, c);
+          //possibilities.add(squareMoves[s].translate(r, c));
         }
       }
       return true;
@@ -241,13 +244,13 @@ public class KnightBoard{
     }
     if (board[r][c]!= 0){
       board[r][c]=0;
-      for (int s = 0; s < squareMoves.size(); s++){
+      for (int s = 0; s < squareMoves.length; s++){
         //for each square in the set of moves, increase the number of moves by 1
         //check if in range first
         if (inRange(squareMoves[s])){
-          squares[squareMoves.getXcor()][squareMoves.getYcor()].addMove(); //add number of moves
+          squares[squareMoves[s].getXcor()][squareMoves[s].getYcor()].addMove(); //add number of moves
           //now translate the possible moves up r units and right c units
-          squareMoves[s].translate(r, c);
+          //possibilities.add(squareMoves[s].translate(r, c));
         }
       }
       return true;
@@ -264,6 +267,24 @@ public class KnightBoard{
     if (level == rows * cols && addKnight(row, col, level) || (rows == 0 && cols == 0)){ //if you've placed down all knights
       return true; //return true
     }
+    possibilities.clear();
+		for (int s = 0; s < squareMoves.length; s++){
+      Square newSquare = squares[row][col].translate(squareMoves[s]); //to be added to possibilities
+			if (inRange(newSquare) && board[row][col] == 0){ //if it is in the board and can be added
+        possibilities.add(newSquare);
+      }
+		}
+		Collections.sort(possibilities);
+    for (int s = 0; s < possibilities.size(); s++){
+      addKnight(possibilities.get(s).getYcor(),possibilities.get(s).getXcor(),level);
+      if (solveH(possibilities.get(s).getYcor(),possibilities.get(s).getXcor(), level+1)){
+        return true;
+      }
+      removeKnight(possibilities.get(s).getYcor(),possibilities.get(s).getXcor());
+    }
+    revert(); //return to normal if all fails
+    return false;
+    /*
     if (addKnight(row, col, level)){ //can you add the knight?
       //expanded to debug
       if (solveH(row + 1, col + 2, level + 1)){
@@ -294,6 +315,7 @@ public class KnightBoard{
     }
     revert(); //return to normal if all fails
     return false;
+    */
   }
   // level is the # of the knight
 
@@ -366,7 +388,7 @@ public class KnightBoard{
   }
 
   public boolean inRange(Square s){ //checks if square s is in the range
-    return (s.x < cols && s.x >=0 && s.y < rows && s.y >= 0); //x cols: y rows
+    return (s.getXcor() < cols && s.getXcor() >=0 && s.getYcor() < rows && s.getYcor() >= 0); //x cols: y rows
   }
 
   public void revert(){ //returns board to 0 everywhere
