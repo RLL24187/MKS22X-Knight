@@ -1,9 +1,9 @@
 public class Square implements Comparable<Square>{
   //has 3 fields: x coordinate, y coordinate, number of possible moves
-  private int x, y, moves;
-  public Square(int xcor, int ycor){
-    x = xcor;
-    y = ycor;
+  private int r, c, moves;
+  public Square(int row, int col){
+    r = row;
+    c = col;
     moves = 0; //dummy
   }
 
@@ -13,12 +13,12 @@ public class Square implements Comparable<Square>{
 	}
 
   //Getters
-  public int getXcor(){
-    return x;
+  public int getRow(){
+    return r;
   }
 
-  public int getYcor(){
-    return y;
+  public int getCol(){
+    return c;
   }
 
   public int getMoves(){
@@ -26,7 +26,7 @@ public class Square implements Comparable<Square>{
   }
 
   //Setters
-  public void setXcor(int xcor){
+  /*public void setXcor(int xcor){
     x = xcor;
   }
 
@@ -37,7 +37,7 @@ public class Square implements Comparable<Square>{
   public void setCoors(int xcor, int ycor){
     x = xcor;
     y = ycor;
-  }
+  }*/
 
   public void setMoves(int newMoves){
     moves = newMoves;
@@ -53,11 +53,11 @@ public class Square implements Comparable<Square>{
 
   //return a new square translated r units up and c units right
   public Square translate(int r, int c){
-    return new Square(x+r, y+c);
+    return new Square(this.r+r, this.c+c);
   }
 
   //same as above but square as parameter
   public Square translate(Square s){
-    return new Square(s.x+x, s.y+y);
+    return new Square(this.r+s.r, this.c+s.c);
   }
 }
