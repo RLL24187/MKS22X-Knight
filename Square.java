@@ -25,20 +25,6 @@ public class Square implements Comparable<Square>{
     return moves;
   }
 
-  //Setters
-  /*public void setXcor(int xcor){
-    x = xcor;
-  }
-
-  public void setYcor(int ycor){
-    y = ycor;
-  }
-
-  public void setCoors(int xcor, int ycor){
-    x = xcor;
-    y = ycor;
-  }*/
-
   public void setMoves(int newMoves){
     moves = newMoves;
   }
