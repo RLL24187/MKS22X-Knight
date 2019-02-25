@@ -44,4 +44,9 @@ public class Square{
   public void subMove(){
     moves--;
   }
+
+  //return a new square translated r units up and c units right
+  public Square translate(int r, int c){
+    return new Square(x+r, y+c);
+  }
 }
