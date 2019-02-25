@@ -350,6 +350,10 @@ public class KnightBoard{
     return (r < rows && r >= 0 && c < cols && c>= 0);
   }
 
+  public boolean inRange(Square s){ //checks if square s is in the range
+    return (s.x < cols && s.x >=0 && s.y < rows && s.y >= 0); //x cols: y rows
+  }
+
   public void revert(){ //returns board to 0 everywhere
     for (int i = 0; i < rows; i++){
       for (int j = 0; j < cols; j++){
