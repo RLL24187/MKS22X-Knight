@@ -273,30 +273,19 @@ public class KnightBoard{
     //actual list of Squares to move to
 
 		for (int s = 0; s < squareMoves.length; s++){
-      //System.out.println("SquareMoves["+s+"]: ("+squareMoves[s].getXcor()+","+squareMoves[s].getYcor()+")");
       Square newSquare = squares[row][col].translate(squareMoves[s]); //to be added to possibilities
-      //System.out.println("In range: "+inRange(newSquare));
-      //System.out.println("newSquare: ("+newSquare.getCol()+","+newSquare.getRow()+")");
-      //System.out.println(toString());
       if (inRange(newSquare) && board[newSquare.getRow()][newSquare.getCol()] == 0){ //if it is in the board and can be added
         possibilities.add(newSquare);
       }
 		}
 		Collections.sort(possibilities); //sort by moves
-    //System.out.println("Possibilities "+possibilities.size());
     for (int s = 0; s < possibilities.size(); s++){ //loop through each possibile Square
-      //System.out.println("Adding possibilities("+s+"): ("+possibilities.get(s).getRow()+","+possibilities.get(s).getCol()+")");
-      //System.out.println("Adding: "+
       addKnight(possibilities.get(s).getRow(),possibilities.get(s).getCol(),level);
-      //);
       if (solveH(possibilities.get(s).getRow(),possibilities.get(s).getCol(), level+1)){
         return true;
       }
-      //System.out.println("possibilities("+s+"): ("+possibilities.get(s).getRow()+","+possibilities.get(s).getCol()+")");
-      //System.out.println("remove the knight: "+
-      removeKnight(possibilities.get(s).getRow(),possibilities.get(s).getCol());//);
+      removeKnight(possibilities.get(s).getRow(),possibilities.get(s).getCol());
     }
-    //revert(); //return to normal if all fails
     return false;
     /*
     if (addKnight(row, col, level)){ //can you add the knight?
