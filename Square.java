@@ -1,4 +1,4 @@
-public class Square{
+public class Square implements Comparable<Square>{
   //has 3 fields: x coordinate, y coordinate, number of possible moves
   private int x, y, moves;
   public Square(int xcor, int ycor){
@@ -6,6 +6,12 @@ public class Square{
     y = ycor;
     moves = 0; //dummy
   }
+
+  //compares moves of this to other Square
+  public int compareTo(Square other) {
+		return moves - other.moves;
+	}
+
   //Getters
   public int getXcor(){
     return x;
