@@ -24,9 +24,6 @@ public class KnightBoard{
   };
   //list of squares to move to (relative locations for translation)
 
-  private ArrayList<Square> possibilities = new ArrayList<Square>(8);
-  //actual list of Squares to move to
-
   private int[][] board;
   //board is the displayed order
   private Square[][] squares;
@@ -228,7 +225,7 @@ public class KnightBoard{
         //for each square in the set of moves, reduce the number of moves by 1
         //check if in range first
         if (inRange(squareMoves[s])){
-          squares[squareMoves[s].getXcor()][squareMoves[s].getYcor()].subMove(); //decrease number of moves
+          squares[squareMoves[s].getYcor()][squareMoves[s].getXcor()].subMove(); //decrease number of moves
           //now translate the possible moves up r units and right c units
           //possibilities.add(squareMoves[s].translate(r, c));
         }
@@ -248,7 +245,7 @@ public class KnightBoard{
         //for each square in the set of moves, increase the number of moves by 1
         //check if in range first
         if (inRange(squareMoves[s])){
-          squares[squareMoves[s].getXcor()][squareMoves[s].getYcor()].addMove(); //add number of moves
+          squares[squareMoves[s].getYcor()][squareMoves[s].getXcor()].addMove(); //add number of moves
           //now translate the possible moves up r units and right c units
           //possibilities.add(squareMoves[s].translate(r, c));
         }
@@ -267,14 +264,16 @@ public class KnightBoard{
     if (level == rows * cols && addKnight(row, col, level) || (rows == 0 && cols == 0)){ //if you've placed down all knights
       return true; //return true
     }
-    possibilities.clear();
+    ArrayList<Square> possibilities = new ArrayList<Square>(8);
+    //actual list of Squares to move to
+
 		for (int s = 0; s < squareMoves.length; s++){
       Square newSquare = squares[row][col].translate(squareMoves[s]); //to be added to possibilities
 			if (inRange(newSquare) && board[row][col] == 0){ //if it is in the board and can be added
         possibilities.add(newSquare);
       }
 		}
-		Collections.sort(possibilities);
+		Collections.sort(possibilities); //sort by moves
     for (int s = 0; s < possibilities.size(); s++){
       addKnight(possibilities.get(s).getYcor(),possibilities.get(s).getXcor(),level);
       if (solveH(possibilities.get(s).getYcor(),possibilities.get(s).getXcor(), level+1)){
