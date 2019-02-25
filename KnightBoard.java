@@ -33,7 +33,7 @@ public class KnightBoard{
 
   //@throws IllegalArgumentException when either parameter is negative.
   public KnightBoard(int startingRows,int startingCols){
-    if (rows <= 0 || cols <= 0) throw new IllegalArgumentException();
+    if (startingRows <= 0 || startingCols <= 0) throw new IllegalArgumentException();
     board = new int[startingRows][startingCols];
     squares = new Square[startingRows][startingCols];
     rows = startingRows;
@@ -173,8 +173,8 @@ public class KnightBoard{
     }
     board[startingRow][startingCol]=1;
     boolean b = solveH(startingRow, startingCol, 2);
-    if (!b) revert();
-    System.out.println(toString());
+    if (!b) revert(); //if you can't solve it, revert to allzero state
+    //System.out.println(toString());
     return b;
   }
 
