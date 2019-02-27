@@ -30,7 +30,7 @@ public class KnightBoard{
     //Make the number of moves for each Square
     for (int r = 0; r < rows; r++){
       for (int c = 0; c < cols; c++){
-        squares[r][c]=new Square(r, c, rows, cols); //constructs square and finds number of moves
+        squares[r][c]=new Square(r, c, rows, cols); //makes square and calculates number of moves for each square
       }
     }
   }
@@ -71,29 +71,23 @@ public class KnightBoard{
   */
 
   /*Use the following format for toString:
-
   (THESE ARE NOT VALID SOLUTIONS, They JUST TO DEMONSTRATE FORMAT)
-
   Single spaces between numbers, but leading spaces on single digit numbers:
    1  2  5
    3  4  6
    7  8  9
-
   Which is equivalant to: " 1  2  5\n 3  4  6\n 7  8  9\n"
-
   When there are two digit numbers (rows*cols >= 10) Put a leading space in front of single digit numbers:
   (spaces replaced with _ to show the difference)
   _1 _2 15 _6
   _3 _4 _7 11
   _8 _9 10 12
   13 14 _5 16
-
   So it looks like this:
    1  2 15  6
    3  4  7 11
    8  9 10 12
   13 14  5 16
-
   *I will not be testing boards that have a rows*cols that is >= 100, as the program would take a long time to complete.
   */
 
@@ -136,15 +130,9 @@ public class KnightBoard{
     if (startingRow < 0 || startingCol <0 || startingRow >= rows || startingCol >= cols){
       throw new IllegalArgumentException("Both parameters must be nonnegative and in the range!");
     }
-    //board[startingRow][startingCol]=1;
-    //boolean b = solveH(startingRow, startingCol, 2);
-    //if (!b) revert(); //if you can't solve it, revert to allzero state
-    //System.out.println(toString());
-    //return b;
-    board[startingRow][startingCol]=1;
-    boolean b = solveH(startingRow, startingCol, 2);
-    System.out.println(toString());
+    boolean b = solveH(startingRow, startingCol, 1);
     if (!b) revert(); //if you can't solve it, revert to allzero state
+    //System.out.println(toString());
     return b;
   }
 
@@ -192,8 +180,6 @@ public class KnightBoard{
       for (int s = 0; s < increments.length; s++){
         //for each square in the set of moves, reduce the number of moves by 1
         //check if in range first
-        //Square x = squareMoves[s].translate(r, c);
-        //x.findMoves(rows, cols);
         int tempR = increments[s][0] + r;
         int tempC = increments[s][1] + c;
         if (inRange(tempR, tempC)){//check if the row and col are valid
@@ -214,7 +200,6 @@ public class KnightBoard{
       for (int s = 0; s < increments.length; s++){
         //for each square in the set of moves, increase the number of moves by 1
         //check if in range first
-        //Square x = squareMoves[s].translate(r, c);
         int tempR = increments[s][0] + r;
         int tempC = increments[s][1] + c;
         if (inRange(tempR, tempC)){//check if the row and col are valid
@@ -246,15 +231,14 @@ public class KnightBoard{
       int tempR = row+increments[s][0];
       int tempC = col+increments[s][1];
       if (inRange(tempR, tempC)){
-        Square newSquare = squares[tempR][tempC];// squares[row][col].translate(squareMoves[s]); //to be added to possibilities
+        Square newSquare = squares[tempR][tempC]; //to be added to possibilities
         if (board[tempR][tempC] == 0){ //if it is in the board and can be added
-          possibilities.add(newSquare);
+          possibilities.add(newSquare); //add it
         }
       }
 		}
 		Collections.sort(possibilities); //sort by moves
-    for (int s = 0; s < possibilities.size(); s++){ //loop through each possibile Square
-      //addKnight(possibilities.get(s).getRow(),possibilities.get(s).getCol(),level);
+    for (int s = 0; s < possibilities.size(); s++){ //loop through each possible Square
       if (solveH(possibilities.get(s).getRow(),possibilities.get(s).getCol(), level+1)){ //recursive part
         return true;
       }
@@ -262,7 +246,7 @@ public class KnightBoard{
     }
     return false;
 
-    /*
+    /*Old unoptimized version
     //Base case:
   if (level == rows * cols && addKnight(row, col, level)){ //if you've placed down all knights
     return true; //return true
