@@ -21,7 +21,7 @@ public class Driver{
     KnightBoard k10x10 = new KnightBoard(10, 10);
 
 
-    System.out.println("-----------Testing KnightBoard constructor-----------\n");
+    //System.out.println("-----------Testing KnightBoard constructor-----------\n");
     /*System.out.println("-----------Testing toString-----------\n");
     System.out.println("k5x5: \n");
     System.out.println(k5x5.toString());
@@ -184,5 +184,8 @@ public class Driver{
     System.out.println(k3x3.toStringMoves());
     System.out.println(k4x4.toStringMoves());
     System.out.println(k5x5.toStringMoves());
+    System.out.println(k6x6.toStringMoves());
+    System.out.println(k7x7.toStringMoves());
+    System.out.println(k6x8.toStringMoves());
   }
 }
