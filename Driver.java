@@ -169,16 +169,16 @@ public class Driver{
     System.out.println(k4x6.countSolutions(0, 0));
     //System.out.println(k4x6.toString());
     k4x6.revert();
-    //System.out.println("Testing k5x5(0,0): \n");
-    //System.out.println(k5x5.countSolutions(0, 0)); //got 304
+    System.out.println("Testing k5x5(0,0): \n");
+    System.out.println(k5x5.countSolutions(0, 0)); //got 304
     //System.out.println(k5x5.toString());
-    //k5x5.revert();
+    k5x5.revert();
 
     //k3x4.revert();
     //System.out.println("\n----------Testing countAllSolutions()----------\n");
     //System.out.println("k3x4: should be 8: " + k3x4.countAllSolutions());
 
-    System.out.println("Testing toStringMoves()\n");
+    /*System.out.println("Testing toStringMoves()\n");
     System.out.println(k1x1.toStringMoves());
     System.out.println(k2x2.toStringMoves());
     System.out.println(k3x3.toStringMoves());
@@ -186,6 +186,6 @@ public class Driver{
     System.out.println(k5x5.toStringMoves());
     System.out.println(k6x6.toStringMoves());
     System.out.println(k7x7.toStringMoves());
-    System.out.println(k6x8.toStringMoves());
+    System.out.println(k6x8.toStringMoves());*/
   }
 }

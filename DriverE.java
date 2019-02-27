@@ -2,7 +2,7 @@ public class DriverE {
 	public static void main(String[] args) {
 		String time;
 		System.out.println("SOLVE: (from (0, 0))\n");
-		for (int r = 1; r < 100; r++) {
+		for (int r = 1; r < 23; r++) { //only works up to 22
 			KnightBoard b = new KnightBoard(r, r);
 			System.out.println("Starting to solve");
 			long startTime = System.nanoTime();
@@ -18,7 +18,7 @@ public class DriverE {
 				System.out.printf("\t%dx%d:\tstack overflow%n", r, r);
 				break;
 			}
-		}/*
+		}
 		System.out.println("\nCOUNT SOLUTIONS: (from (0, 0))\n");
 		for (int r = 1; r < 6; r++) {
 			for (int c = r; c < 6; c++) {
@@ -33,6 +33,6 @@ public class DriverE {
 					break;
 				}
 			}
-		}*/
+		}
 	}
 }
