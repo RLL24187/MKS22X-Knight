@@ -1,18 +1,7 @@
 import java.util.*;
 public class KnightBoard{
-  //KnightBoard has 3 public methods and a constructor, a private helper is needed as well.
   //Fields
-  /*private ArrayList<Square> squareMoves = new ArrayList<Square>(8);
-  squareMoves.add(new Square(2, 1));
-  squareMoves.add(new Square(2, -1));
-  squareMoves.add(new Square(1, 2));
-  squareMoves.add(new Square(1, -2));
-  squareMoves.add(new Square(-1, 2));
-  squareMoves.add(new Square(-1, -2));
-  squareMoves.add(new Square(-2, 1));
-  squareMoves.add(new Square(-2. -1));
-  */
-  private Square[] squareMoves = {
+  /*private Square[] squareMoves = {
     new Square( 2,  1),
     new Square( 2, -1),
     new Square( 1,  2),
@@ -21,6 +10,16 @@ public class KnightBoard{
     new Square(-1, -2),
     new Square(-2,  1),
     new Square(-2, -1)
+  };*/
+  private int[][] increments = {
+    { 2,  1},
+    { 2, -1},
+    { 1,  2},
+    { 1, -2},
+    {-1,  2},
+    {-1, -2},
+    {-2,  1},
+    {-2, -1}
   };
   //list of squares to move to (relative locations for translation)
 
@@ -42,30 +41,7 @@ public class KnightBoard{
     for (int r = 0; r < rows; r++){
       for (int c = 0; c < cols; c++){
         squares[r][c]=new Square(r, c);
-        if (inRange(r+2, c+1)){
-          squares[r][c].addMove(); //increase number of moves from Squares[r][c]
-        }
-        if (inRange(r+2, c-1)){
-          squares[r][c].addMove();
-        }
-        if (inRange(r-2, c+1)){
-          squares[r][c].addMove();
-        }
-        if (inRange(r-2, c-1)){
-          squares[r][c].addMove();
-        }
-        if (inRange(r+1, c+2)){
-          squares[r][c].addMove();
-        }
-        if (inRange(r+1, c-2)){
-          squares[r][c].addMove();
-        }
-        if (inRange(r-1, c+2)){
-          squares[r][c].addMove();
-        }
-        if (inRange(r-1, c-2)){
-          squares[r][c].addMove();
-        }
+        squares[r][c].findMoves(rows, cols);
       }
     }
   }
@@ -171,10 +147,14 @@ public class KnightBoard{
     if (startingRow < 0 || startingCol <0 || startingRow >= rows || startingCol >= cols){
       throw new IllegalArgumentException("Both parameters must be nonnegative and in the range!");
     }
-    board[startingRow][startingCol]=1;
-    boolean b = solveH(startingRow, startingCol, 2);
-    if (!b) revert(); //if you can't solve it, revert to allzero state
+    //board[startingRow][startingCol]=1;
+    //boolean b = solveH(startingRow, startingCol, 2);
+    //if (!b) revert(); //if you can't solve it, revert to allzero state
     //System.out.println(toString());
+    //return b;
+    boolean b = solveH(startingRow, startingCol, 1);
+    System.out.println(toString());
+    //if (!b) revert(); //if you can't solve it, revert to allzero state
     return b;
   }
 
@@ -219,12 +199,15 @@ public class KnightBoard{
     }
     if (board[r][c]==0){ //if no knight added here
       board[r][c]=level; //set num equal to level
-      for (int s = 0; s < squareMoves.length; s++){
+      for (int s = 0; s < increments.length; s++){
         //for each square in the set of moves, reduce the number of moves by 1
         //check if in range first
-        Square x = squareMoves[s].translate(r, c);
-        if (inRange(x)){
-          squares[x.getRow()][x.getCol()].subMove(); //decrease number of moves
+        //Square x = squareMoves[s].translate(r, c);
+        //x.findMoves(rows, cols);
+        int tempR = increments[s][0] + r;
+        int tempC = increments[s][1] + c;
+        if (inRange(tempR, tempC)){//check if the row and col are valid
+          squares[tempR][tempC].subMove(); //decrease number of moves
         }
       }
       return true;
@@ -238,12 +221,14 @@ public class KnightBoard{
     }
     if (board[r][c]!= 0){
       board[r][c]=0;
-      for (int s = 0; s < squareMoves.length; s++){
+      for (int s = 0; s < increments.length; s++){
         //for each square in the set of moves, increase the number of moves by 1
         //check if in range first
-        Square x = squareMoves[s].translate(r, c);
-        if (inRange(x)){
-          squares[x.getRow()][x.getCol()].addMove(); //add number of moves
+        //Square x = squareMoves[s].translate(r, c);
+        int tempR = increments[s][0] + r;
+        int tempC = increments[s][1] + c;
+        if (inRange(tempR, tempC)){//check if the row and col are valid
+          squares[tempR][tempC].addMove(); //add number of moves
         }
       }
       return true;
@@ -256,60 +241,71 @@ public class KnightBoard{
   //col is starting ycor
   //level is the number to place in the box
   private boolean solveH(int row, int col, int level){
+    //
     //Base case:
-    if (level == rows * cols+1){ //if you've placed down all knights
+    if (level == rows * cols && addKnight(row, col, level)){ //if you've placed down all knights
       return true; //return true
     }
+
     ArrayList<Square> possibilities = new ArrayList<Square>(8);
     //actual list of Squares to move to
 
-		for (int s = 0; s < squareMoves.length; s++){
-      Square newSquare = squares[row][col].translate(squareMoves[s]); //to be added to possibilities
-      if (inRange(newSquare) && board[newSquare.getRow()][newSquare.getCol()] == 0){ //if it is in the board and can be added
-        possibilities.add(newSquare);
+    addKnight(row, col, level);
+
+		for (int s = 0; s < increments.length; s++){
+      int tempR = row+increments[s][0];
+      int tempC = col+increments[s][1];
+      if (inRange(tempR, tempC)){
+        Square newSquare = squares[tempR][tempC];// squares[row][col].translate(squareMoves[s]); //to be added to possibilities
+        if (board[tempR][tempC] == 0){ //if it is in the board and can be added
+          possibilities.add(newSquare);
+        }
       }
 		}
 		Collections.sort(possibilities); //sort by moves
     for (int s = 0; s < possibilities.size(); s++){ //loop through each possibile Square
-      addKnight(possibilities.get(s).getRow(),possibilities.get(s).getCol(),level);
+      //addKnight(possibilities.get(s).getRow(),possibilities.get(s).getCol(),level);
       if (solveH(possibilities.get(s).getRow(),possibilities.get(s).getCol(), level+1)){ //recursive part
         return true;
       }
       removeKnight(possibilities.get(s).getRow(),possibilities.get(s).getCol()); //remove if false
     }
     return false;
+
     /*
-    if (addKnight(row, col, level)){ //can you add the knight?
-      //expanded to debug
-      if (solveH(row + 1, col + 2, level + 1)){
-        return true;
-      }
-      if (solveH(row + 2, col + 1, level + 1)){
-        return true;
-      }
-      if (solveH(row - 1, col + 2, level + 1)){
-        return true;
-      }
-      if (solveH(row - 2, col + 1, level + 1)){
-        return true;
-      }
-      if (solveH(row + 1, col - 2, level + 1)){
-        return true;
-      }
-      if (solveH(row + 2, col - 1, level + 1)){
-        return true;
-      }
-      if (solveH(row - 1, col - 2, level + 1)){
-        return true;
-      }
-      if (solveH(row - 2, col - 1, level + 1)){
-        return true;
-      }
-      removeKnight(row, col); //otherwise remove it again
+    //Base case:
+  if (level == rows * cols && addKnight(row, col, level)){ //if you've placed down all knights
+    return true; //return true
+  }
+  if (addKnight(row, col, level)){ //can you add the knight?
+    //expanded to debug
+    if (solveH(row + 1, col + 2, level + 1)){
+      return true;
     }
-    revert(); //return to normal if all fails
-    return false;
-    */
+    if (solveH(row + 2, col + 1, level + 1)){
+      return true;
+    }
+    if (solveH(row - 1, col + 2, level + 1)){
+      return true;
+    }
+    if (solveH(row - 2, col + 1, level + 1)){
+      return true;
+    }
+    if (solveH(row + 1, col - 2, level + 1)){
+      return true;
+    }
+    if (solveH(row + 2, col - 1, level + 1)){
+      return true;
+    }
+    if (solveH(row - 1, col - 2, level + 1)){
+      return true;
+    }
+    if (solveH(row - 2, col - 1, level + 1)){
+      return true;
+    }
+    removeKnight(row, col); //otherwise remove it again
+  }
+  return false;*/
   }
   // level is the # of the knight
 
