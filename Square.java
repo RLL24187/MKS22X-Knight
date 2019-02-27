@@ -5,7 +5,7 @@ public class Square implements Comparable<Square>{
     r = row;
     c = col;
     moves = 0; //dummy
-    this.findMoves(rows, cols);
+    this.findMoves(rows, cols); //calculate number of moves
   }
 
   public Square(int row, int col){
@@ -71,15 +71,16 @@ public class Square implements Comparable<Square>{
     }
   }
 
+//not needed!
   //return a new square translated r units up and c units right
-  public Square translate(int r, int c){
+  /*public Square translate(int r, int c){
     return new Square(this.r+r, this.c+c);
   }
 
   //same as above but square as parameter
   public Square translate(Square s){
     return new Square(this.r+s.r, this.c+s.c);
-  }
+  }*/
 
   public boolean inRange(int r, int c, int rows, int cols){
     return (r>=0&&c>=0&&r<rows&&c<cols);
