@@ -1,16 +1,6 @@
 import java.util.*;
 public class KnightBoard{
   //Fields
-  /*private Square[] squareMoves = {
-    new Square( 2,  1),
-    new Square( 2, -1),
-    new Square( 1,  2),
-    new Square( 1, -2),
-    new Square(-1,  2),
-    new Square(-1, -2),
-    new Square(-2,  1),
-    new Square(-2, -1)
-  };*/
   private int[][] increments = {
     { 2,  1},
     { 2, -1},
@@ -40,8 +30,7 @@ public class KnightBoard{
     //Make the number of moves for each Square
     for (int r = 0; r < rows; r++){
       for (int c = 0; c < cols; c++){
-        squares[r][c]=new Square(r, c);
-        squares[r][c].findMoves(rows, cols);
+        squares[r][c]=new Square(r, c, rows, cols); //constructs square and finds number of moves
       }
     }
   }
@@ -152,9 +141,10 @@ public class KnightBoard{
     //if (!b) revert(); //if you can't solve it, revert to allzero state
     //System.out.println(toString());
     //return b;
-    boolean b = solveH(startingRow, startingCol, 1);
+    board[startingRow][startingCol]=1;
+    boolean b = solveH(startingRow, startingCol, 2);
     System.out.println(toString());
-    //if (!b) revert(); //if you can't solve it, revert to allzero state
+    if (!b) revert(); //if you can't solve it, revert to allzero state
     return b;
   }
 
